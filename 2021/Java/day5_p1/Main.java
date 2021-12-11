@@ -53,9 +53,9 @@ public class Main {
         StringBuilder b= new StringBuilder();
         StringBuilder c= new StringBuilder();
         for (int i = 0; i < 20; i++) {
-          a.append(vOne.countLE(i));
-          b.append(vMore.countLE(i));
-          c.append(vCount.countLE(i));
+          a.append(vOne.countLT(i+1));
+          b.append(vMore.countLT(i+1));
+          c.append(vCount.countLT(i+1));
         }
         log("      vOne   = "+a);
         log("      vMore  = "+b);
@@ -268,20 +268,17 @@ class BinTree {
     return ret;
   }
   
-  public int countLE(int point) {
-    return countLE(root, point);
-  }
   public int countLT(int point) {
-    return countLE(point-1);
+    return countLT(root, point);
   }
   
-  private int countLE(BNode c, int point) {
+  private int countLT(BNode c, int point) {
     if (point > c.point) {
-      return (c.l==null? 0 : c.l.sumCount) + c.myCount + (c.r==null? 0 : countLE(c.r, point));
+      return (c.l==null? 0 : c.l.sumCount) + c.myCount + (c.r==null? 0 : countLT(c.r, point));
     } else if (point < c.point) {
-      return c.l==null? 0 : countLE(c.l, point);
+      return c.l==null? 0 : countLT(c.l, point);
     } else { // point == c.point
-      return c.myCount + (c.l==null? 0 : c.l.sumCount);
+      return c.l==null? 0 : c.l.sumCount;
     }
   }
   
