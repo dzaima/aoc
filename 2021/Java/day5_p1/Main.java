@@ -45,9 +45,9 @@ public class Main {
     BinTree vMore = new BinTree(points); // 0 or 1, if current sell has >1 overlapping vertical lines
     BinTree vCount = new BinTree(points); // 0 if no lines present in this cell, otherwise, number of overlapping lines minus one
   
-    BiFunction<Integer, Integer, Integer> getCount = (s, e) -> {
-      int nS = vOne.countLT(s);
-      int nE = vOne.countLT(e);
+    BiFunction<Integer, Integer, Long> getCount = (s, e) -> {
+      long nS = vOne.countLT(s);
+      long nE = vOne.countLT(e);
       if (LOG) {
         StringBuilder a= new StringBuilder();
         StringBuilder b= new StringBuilder();
@@ -141,9 +141,15 @@ public class Main {
             pls = sx;
             ple = ex;
           } else {
-            log("    prev=["+pls+";"+ple+")");
+            if (sx<pls) {
+              sx = pls;
+              ex = Math.max(sx,ex);
+              log("    cutting off start");
+            }
+            log("    prev=["+pls+";"+ple+") c=["+sx+";"+ex+")");
             int fS = pls;
             int fE = Math.min(ple, sx);
+            assert fS<=fE : sx+" "+ex+" "+pls+" "+ple;
             if (fS!=fE) {
               log("    finishing previous line ["+fS+";"+fE+")");
               lnResult+= getCount.apply(fS, fE);
@@ -152,8 +158,8 @@ public class Main {
             if (sx < ple) {
               int oS = Math.max(pls, sx);
               int oE = Math.min(ple, ex);
-              int mS = vMore.countLT(oS);
-              int mE = vMore.countLT(oE);
+              long mS = vMore.countLT(oS);
+              long mE = vMore.countLT(oE);
               log("    Horizontal overlap on ["+oS+";"+oE+"), minus "+mE+"-"+mS);
               lnResult+= (oE-oS) - (mE-mS);
             }
@@ -223,7 +229,8 @@ class BinTree {
   public final BNode root;
   
   public BinTree(int[] points) {
-    root = build(points, 0, points.length);
+    if (points.length>0) root = build(points, 0, points.length);
+    else root = null;
   }
   
   private BNode build(int[] points, int s, int e) {
@@ -234,7 +241,7 @@ class BinTree {
       l.p = res;
       return res;
     }
-    if (s==e) throw new Error("Zero vertical lines not supported");
+    assert s<e;
     int m = (s+e)/2;
     BNode l = build(points, s, m);
     BNode r = build(points, m+1, e);
@@ -268,11 +275,11 @@ class BinTree {
     return ret;
   }
   
-  public int countLT(int point) {
+  public long countLT(int point) {
     return countLT(root, point);
   }
   
-  private int countLT(BNode c, int point) {
+  private long countLT(BNode c, int point) {
     if (point > c.point) {
       return (c.l==null? 0 : c.l.sumCount) + c.myCount + (c.r==null? 0 : countLT(c.r, point));
     } else if (point < c.point) {
@@ -293,7 +300,7 @@ class BinTree {
   public static class BNode {
     public final int point;
     public int myCount = 0;
-    public int sumCount = 0; // sum of counts of me + children
+    public long sumCount = 0; // sum of counts of me + children
     public final BNode l, r; // r!=null => l!=null
     public BNode p;
     
