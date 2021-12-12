@@ -14,7 +14,7 @@ mid ← /¬(↕≠u)∊sp‿ep # indexes on non-endpoint caves (ones that we may
 Step ← { r‿a‿l‿v: # result, second visit available, last position, masks of visited caves
   as‿ls‿vs ← <˘⍉>{𝕊: # iterate through all caves
     cc ← 𝕩⊑c           # get ones adjacent to the current one
-    lm ← l∊cc          # mask of paths adjacent to current ones
+    lm ← ∨´l⊸=¨cc      # mask of paths adjacent to current ones; currently faster than l∊cc
     f ← (𝕩⊑big) ∨ ¬𝕩⊑v # always fine to add - either big, or not already present
     o ← lm ∧ f ∨ a     # okay to add
     ⟨o/a∧f ⋄ (+´o)⥊𝕩 ⋄ 1¨⌾(𝕩⊸⊑) o⊸/¨ v⟩
