@@ -3,14 +3,13 @@
 rs‿re ← <˘⍉>'-'Split¨•FLines ≠◶"12.in"‿⊑ •args
 
 u ← ⍷rs∾re # unique caves
-ul ← ≠u
 big ← ('A'⊸≤∧≤⟜'Z') ⊑¨u # whether each of them are big
 sp‿ep ← u⊐"start"‿"end" # start and end cave numbers
 
 s‿e ← ∾¨⟜⌽rs‿re ⊐˜¨ <u # connected cave pairs
 c ← {(s=𝕩)/e}¨ ↕≠u # list of connected caves for each cave
 
-mid ← /¬(↕ul)∊sp‿ep # indexes on non-endpoint caves (ones that we may want to add to lists)
+mid ← /¬(↕≠u)∊sp‿ep # indexes on non-endpoint caves (ones that we may want to add to lists)
 
 Step ← { r‿a‿l‿v: # result, second visit available, last position, masks of visited caves
   as‿ls‿vs ← <˘⍉>{𝕊: # iterate through all caves
@@ -24,4 +23,4 @@ Step ← { r‿a‿l‿v: # result, second visit available, last position, masks
   ⟨r+done ⋄ ∾as ⋄ ∾ls ⋄ ∾¨ <˘⍉>vs⟩
 }
 
-•Show¨ {⊑ Step•_while_{0≠≠1⊑𝕩} ⟨0 ⋄ ⟨𝕩⟩ ⋄ ⟨sp⟩ ⋄ ⋈¨ sp=↕ul⟩}¨ 0‿1
+•Show¨ {⊑ Step•_while_{0≠≠1⊑𝕩} ⟨0 ⋄ ⟨𝕩⟩ ⋄ ⟨sp⟩ ⋄ ⋈¨ sp=↕≠u⟩}¨ 0‿1
