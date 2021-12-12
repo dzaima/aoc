@@ -15,7 +15,7 @@ Step ← { r‿l:
       l ← ¯1⊑v            # last
       l≠ep?               # if not at end:
       n ← l⊑c             # caves connected to this one
-      f ← (n⊏big) ∨ ¬n∊v  # always fine to add - either big, not not already present
+      f ← (n⊏big) ∨ ¬n∊v  # always fine to add - either big, or not already present
       n‿f/˜¨↩ <f ∨ a∧n≠sp # if can't use second visit, remove ones not 'always fine to add'
       (a∧f) ⋈¨ v⊸∾¨ n;    # and return the pairs
     𝕊:
