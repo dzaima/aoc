@@ -4,8 +4,9 @@ chrs ← (∊⟜('A'+↕26))⊸/ ⍷∾l # unique characters
 w ← ≠chrs
 s ← chrs⊐⊑l # initial state to its indexes
 
-tp‿tn ← <˘⍉>{((chrs⊐2⊸↑)⋈chrs⊑∘⊐¯1⊸⊑)𝕩}¨ 2↓l
-map ← tn⌾(tp⊸⊑) (¯1⥊˜⋈˜w) # map of the middle char between the given x/y
+tp ← chrs⊸⊐¨ 2↑¨ 2↓l # transformation pattern
+tn ← chrs⊐¯1⊑¨ 2↓l # transformation new char index
+map ← tn⌾(tp⊸⊑) (¯1⥊˜⋈˜w) # map to the new middle char from the pair given as x/y coords
 
 st0 ← (0⥊˜≢map) {1⊸+⌾(𝕨⊸⊑)𝕩}´ <˘2↕s # initial state
 k ← (⊔⥊(w×↕≠map) + map) ∾¨ ⊔⥊(↕≠map) +⎉1 w×map # which indexes to sum for this one
