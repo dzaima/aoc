@@ -19,18 +19,18 @@ Packet ← {𝕊p:
     t=4?
       num←0
       {𝕊: n←p.B@ ⋄ num ↩ (num×16) + p.N 4 ⋄ n}•_while_⊢1
-      num
-    ;
-    lty ← p.B@
-    rs ← {
-      lty=0?
-        end ← p.i + p.N 15
-        ps ← ⟨⟩
-        {𝕊:ps∾↩<Packet p}•_while_{𝕊:p.i<end} @;
-      lty=1?
-        {𝕊:Packet p}¨ ↕p.N 11
-    }
-    t◶+‿×‿⌊‿⌈‿!‿>‿<‿=´ rs
+      num;
+    t≠4?
+      lty ← p.B@
+      rs ← {
+        lty=0?
+          end ← p.i + p.N 15
+          ps ← ⟨⟩
+          {𝕊:ps∾↩<Packet p}•_while_{𝕊:p.i<end} @;
+        lty=1?
+          {𝕊:Packet p}¨ ↕p.N 11
+      }
+      t◶+‿×‿⌊‿⌈‿!‿>‿<‿=´ rs
   }
 }
 
