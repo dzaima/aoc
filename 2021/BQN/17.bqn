@@ -1,0 +1,23 @@
+#!/usr/bin/env cbqn
+⟨RB, B10, Num, Ints, Split⟩ ← •Import "utils.bqn"
+l ← ⊑•FLines ≠◶"17.in"‿⊑ •args
+NInts ← {{'-'=⊑𝕩?-Num 1↓𝕩;Num𝕩}¨((¯1+⊢×·+`»⊸<)𝕩∊'-'∾'0'+↕10)⊔𝕩}
+xs‿xe‿ys‿ye←NInts l
+s←xs‿ys
+e←xe‿ye
+
+my ← 0
+n ← 0
+Step ← {⟨vy0 ⋄ p ⋄ v⟩: vx‿vy←v
+  nx‿ny ← p+↩ v
+  done ← ∧´(p≥s)∧p≤e
+  my⌈´↩ done/vy0
+  n+↩ +´done
+  h ← (¬done)∧ny≥ys
+  ⟨h/vy0 ⋄ (<h)/¨p ⋄ ⟨-⟜× h/vx ⋄ ¯1 + h/vy⟩⟩
+}
+
+Iota ← {x‿y: ⟨y/↕x ⋄ (x×y)⥊↕y⟩}
+Step•_while_{×≠⊑𝕩} {x‿y: sz←⟨x,1+2×y⟩ ⋄ z←0⥊˜×´sz ⋄ v←x‿y-Iota sz ⋄ ⟨1⊑v ⋄ z‿z ⋄ v⟩} 1+s⌈○|e
+•Show {2÷˜𝕩×𝕩+1}my
+•Show n
