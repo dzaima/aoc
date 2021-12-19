@@ -11,9 +11,8 @@ Rots ← {
 
 
 scpos ← ⟨0‿0‿0⟩
-Correct ← {a𝕊b: # assumes left arg is ground truth, and right arg is unknown
+Correct ← {a𝕊br: # assumes left arg is ground truth, and right arg is unknown
   at ← <˘⍉>a
-  br ← Rots b
   bd ← {∾(⍉∘>𝕩⊸-)¨at}¨ br
   d←{+´¬∊𝕩}¨ bd
   11=⌈´d?
@@ -26,7 +25,7 @@ Correct ← {a𝕊b: # assumes left arg is ground truth, and right arg is unknow
 }
 
 done ← 1↑l
-todo ← 1↓l
+todo ← Rots¨ 1↓l
 {𝕊:
   todo ↩ {𝕊b:
     nv ← @ {a𝕊@:a Correct b; 𝕩}´ done
