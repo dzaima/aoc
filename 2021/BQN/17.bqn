@@ -1,8 +1,7 @@
 #!/usr/bin/env cbqn
-⟨RB, B10, Num, Ints, Split⟩ ← •Import "utils.bqn"
+⟨SInts⟩ ← •Import "utils.bqn"
 l ← ⊑•FLines ≠◶"17.in"‿⊑ •args
-NInts ← {{'-'=⊑𝕩?-Num 1↓𝕩;Num𝕩}¨((¯1+⊢×·+`»⊸<)𝕩∊'-'∾'0'+↕10)⊔𝕩}
-xs‿xe‿ys‿ye←NInts l
+xs‿xe‿ys‿ye←SInts l
 s←xs‿ys
 e←xe‿ye
 
