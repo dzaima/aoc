@@ -14,11 +14,11 @@ scpos ← ⟨0‿0‿0⟩
 Correct ← {a𝕊b: # assumes left arg is ground truth, and right arg is unknown
   at ← <˘⍉>a
   br ← Rots b
-  bd ← {∾{x‿y‿z: (x⋈¨y)∾¨z}¨𝕩⊸-¨at}¨ br # TODO (x⋈¨y)∾¨z → <˘⍉> when that's fast
+  bd ← {∾(⍉∘>𝕩⊸-)¨at}¨ br
   d←{+´¬∊𝕩}¨ bd
   11=⌈´d?
     i←⊑d⊐⌈´d
-    rel ← -(bdc⊑˜⊑∘⊐⟜(⌈´)) ⊒ bdc←i⊑bd
+    rel ← -(bdc⊏˜⊑∘⊐⟜(⌈´)) ⊒ bdc←i⊑bd
     scpos∾↩ ⟨rel⟩
     rel+i⊑br
     ;

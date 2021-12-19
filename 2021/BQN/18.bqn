@@ -48,4 +48,4 @@ Simplify ← {⊑{p‿c:c NHP Step c}•_while_(≢´) 𝕩 NHP Step𝕩}
 Add ← {Simplify 1⊸+⌾(1⊸⊑) 𝕨∾¨𝕩}
 
 •Show Mag Add˜´⌽ l
-•Show ⌈´⥊ Mag∘Add⌜˜ l
+•Show ⌈´⥊ (≠⌜˜↕≠l) × Mag∘Add⌜˜ l
