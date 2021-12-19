@@ -24,15 +24,18 @@ Correct ← {a𝕊br: # assumes left arg is ground truth, and right arg is unkno
   @
 }
 
-done ← 1↑l
 todo ← Rots¨ 1↓l
-{𝕊:
+allDone ← ⟨⟩
+{𝕊prevDone:
+  newDone ← ⟨⟩
   todo ↩ {𝕊b:
-    nv ← @ {a𝕊@:a Correct b; 𝕩}´ done
-    nv≢@? done∾↩ ⟨nv⟩
+    nv ← @ {a𝕊@:a Correct b; 𝕩}´ prevDone
+    nv≢@? newDone∾↩ ⟨nv⟩
+          allDone∾↩ ⟨nv⟩
     0;1
   }¨⊸/ todo
-}•_while_{𝕊:0≠≠todo}@
+  newDone
+}•_while_{𝕊:0≠≠todo} 1↑l
 
-•Show +´∊⍉>∾¨<˘⍉>done
+•Show +´∊⍉>∾¨<˘⍉>allDone
 •Show ⌈´+´¨ ⥊|-⌜˜ scpos
