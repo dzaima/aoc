@@ -25,7 +25,7 @@ Correct ← {a𝕊br: # assumes left arg is ground truth, and right arg is unkno
 }
 
 todo ← Rots¨ 1↓l
-allDone ← ⟨⟩
+allDone ← 1↑l
 {𝕊prevDone:
   newDone ← ⟨⟩
   todo ↩ {𝕊b:
@@ -35,7 +35,7 @@ allDone ← ⟨⟩
     0;1
   }¨⊸/ todo
   newDone
-}•_while_{𝕊:0≠≠todo} 1↑l
+}•_while_{𝕊:0≠≠todo} allDone
 
 •Show +´∊⍉>∾¨<˘⍉>allDone
 •Show ⌈´+´¨ ⥊|-⌜˜ scpos
