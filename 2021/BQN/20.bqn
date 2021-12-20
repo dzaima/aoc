@@ -1,7 +1,7 @@
 #!/usr/bin/env cbqn
 ⟨RB⟩ ← •Import "utils.bqn"
 l ← '#'=•FLines ≠◶"20.in"‿⊑ •args
-p ← ⊑l
+p ← "Ai16"•internal.Variation ⊑l # TODO remove that
 
 Step ← { s‿b:
   r ← {RB ⟨s‿s∾𝕩 ⋄ s∾𝕩∾s ⋄ 𝕩∾s‿s⟩}¨b
