@@ -16,7 +16,10 @@ Fmt ← {s‿f‿r:
 
 Do ← {
   minSc←∞
-  Next ← {Dfs 𝕩} # in case of a need for some filtering
+  nextKs ← ↕0
+  nextVs ← ⟨⟩
+  # Next ← {Dfs 𝕩} # in case of a need for some filtering
+  Next ← {nextKs∾↩ ⊑𝕩 ⋄ nextVs∾↩ <1↓𝕩}
   Dfs ← { s‿f‿r:
     ft ← 4≠f # which spaces outside are free
     {
@@ -77,6 +80,13 @@ Do ← {
     }
   }
   Dfs ⟨0 ⋄ 11⥊4 ⋄ 𝕩⟩
+  {𝕊:
+    bestIs ← {𝕩⊑˜⊑(⊢⊐⌊´)𝕩⊏nextKs}¨ ⊔⊐ nextVs
+    vs←(bestIs⊏nextKs)∾¨bestIs⊏nextVs
+    nextVs ↩ ⟨⟩
+    nextKs ↩ ↕0
+    Dfs¨ vs
+  } •_while_{𝕊: ×≠nextKs} @
   minSc
 }
 •Show Do l
