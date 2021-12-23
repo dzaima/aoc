@@ -19,26 +19,27 @@ Diff ← {𝕊s‿e: ∧´s<e}¨⊸/ { ⟨sKx‿sKy‿sKz⋄eKx‿eKy‿eKz⟩ �
 Do ← {
   rs‿re ← ⋈˜ 3⥊<↕0
   
-  Add ← {𝕊as‿ae:
-    i ← ∧´(as<re)∧ae>rs
-    ∨´i?
-      iv ← (⊑/i)⊑¨¨rs‿re
-      Add¨ as‿ae Diff iv;
-    # else
+  Add ← {
+    𝕊𝕩: 0𝕊𝕩;
+    si𝕊as‿ae:
+      i ← ∧´(as<si↓¨re)∧ae>si↓¨rs
+      ∨´i?
+        pos ← si+⊑/i
+        iv ← pos⊑¨¨rs‿re
+        pos Add¨ as‿ae Diff iv;
+    ·𝕊·:
     # long version of `rs‿re∾¨¨↩ 𝕩` as ¨ keeps references unnecessarily; 50% boost; TODO don't
-    rs{x‿y‿z←𝕨 ⋄ ax‿ay‿az←𝕩 ⋄ ⟨x∾ax,y∾ay,z∾az⟩}↩0⊑𝕩
-    re{x‿y‿z←𝕨 ⋄ ax‿ay‿az←𝕩 ⋄ ⟨x∾ax,y∾ay,z∾az⟩}↩1⊑𝕩
+      rs{x‿y‿z←𝕨 ⋄ ax‿ay‿az←𝕩 ⋄ ⟨x∾ax,y∾ay,z∾az⟩}↩0⊑𝕩
+      re{x‿y‿z←𝕨 ⋄ ax‿ay‿az←𝕩 ⋄ ⟨x∾ax,y∾ay,z∾az⟩}↩1⊑𝕩
   }
   Sub ← {𝕊as‿ae:
     i ← ∧´(as<re)∧ae>rs
-    pos ← /i
     iv ← i⊸/¨¨ rs‿re
     rs‿re (¬i)⊸/¨¨↩
-    {Add¨ 𝕩 Diff as‿ae}¨ <˘⍉>{<˘⍉>𝕩}¨iv
+    (/i) {𝕨 Add¨ 𝕩 Diff as‿ae}¨ <˘⍉>{<˘⍉>𝕩}¨ iv
   }
   
   {𝕊 ⟨on⋄c⟩: on◶Sub‿Add c}¨ 𝕩
-  
   +´{×´-˜´𝕩} rs‿re
 }
 
