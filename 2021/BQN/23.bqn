@@ -19,7 +19,7 @@ Do ← {
   nextKs ← ↕0
   nextVs ← ⟨⟩
   # Next ← {Get 𝕩} # in case of a need for some filtering
-  Next ← {nextKs∾↩ ⊑𝕩 ⋄ nextVs∾↩ <1↓𝕩}
+  Next ← {nextKs∾↩ ⊑𝕩 ⋄ nextVs∾↩ <1↓𝕩 ⋄ 1}
   Get ← { s‿f‿r:
     ft ← 4≠f # which spaces outside are free
     {
