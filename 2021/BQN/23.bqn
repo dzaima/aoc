@@ -18,9 +18,10 @@ Do ← {
   minSc←∞
   nextKs ← ↕0
   nextVs ← ⟨⟩
-  # Next ← {Dfs 𝕩} # in case of a need for some filtering
+  # Next ← {Get 𝕩} # in case of a need for some filtering
+  prev ← ⟨⟩
   Next ← {nextKs∾↩ ⊑𝕩 ⋄ nextVs∾↩ <1↓𝕩}
-  Dfs ← { s‿f‿r:
+  Get ← { s‿f‿r:
     ft ← 4≠f # which spaces outside are free
     {
       sorted ← ∧´¨ (r=4) ∨ r=↕4
@@ -79,13 +80,15 @@ Do ← {
       ;0}¨ ↕4
     }
   }
-  Dfs ⟨0 ⋄ 11⥊4 ⋄ 𝕩⟩
+  Get ⟨0 ⋄ 11⥊4 ⋄ 𝕩⟩
   {𝕊:
+    nextKs‿nextVs (¬nextVs∊prev)⊸/¨↩
     bestIs ← {𝕩⊑˜⊑(⊢⊐⌊´)𝕩⊏nextKs}¨ ⊔⊐ nextVs
     vs←(bestIs⊏nextKs)∾¨bestIs⊏nextVs
+    prev∾↩ vs
     nextVs ↩ ⟨⟩
     nextKs ↩ ↕0
-    Dfs¨ vs
+    Get¨ vs
   } •_while_{𝕊: ×≠nextKs} @
   minSc
 }
