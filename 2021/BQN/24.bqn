@@ -60,8 +60,72 @@ Comp ← {
   •BQN ∾⟨res,nl,"z}"⟩
 }
 
-f ← Comp l
-# f ← Train l # alternative compiler
+OptComp ← { 𝕊:
+  inpCtr ← 0
+  nl←⟨@+10⟩
+  val0 ← ⟨'c',0⟩
+  vars ← 4⥊<val0
+  SetVar ← {vars𝕩⌾(𝕨⊸⊑)↩}
+  instrs ← ⟨⟩
+  instrUsage ← ↕0
+  IncUsage ← {instrUsage+⟜1⌾((1⊑𝕩)⊸⊑)↩}⍟('r'≡⊑)
+  AddInstr ← { opid‿r‿la‿ra:
+    IncUsage¨ la‿ra
+    instrs∾↩ <⟨opid, la, ra⟩
+    instrUsage∾↩ 0
+    r SetVar⍟(r≢@) ⟨'r'⋄¯1+≠instrs⟩
+  }
+  
+  { 𝕊ins:
+    ty ← 3↑ins
+    v1 ← 'w'-˜4⊑ins
+    #        012345
+    #        i+×÷|=
+    opid ← ⊑"nduioq"⊐1⊑ty
+    {
+      opid≡0? v1 SetVar ⟨'i'⋄inpCtr⟩ ⋄ inpCtr+↩1;
+      v1v ← v1⊑vars
+      v2v ← {(≥⟜'w'∧≤⟜'z')6⊑ins? vars⊑˜'w'-˜6⊑ins; ⟨'c'⋄SInt 6↓ins⟩}
+      {
+        "cc"≡⊑¨v1v‿v2v?
+          v1 SetVar ⟨'c',v1v opid◶⟨@,+,×,(××⌊∘|)÷,|˜,=⟩○(1⊸⊑) v2v⟩;
+        (⊑(<val0)∊v1v‿v2v) ∧ opid≡1? # 0+x, x+0
+          v1 SetVar (val0≡v1v)⊑v1v‿v2v;
+        (⊑(<val0)∊v1v‿v2v) ∧ opid≡2? # 0×x, x×0
+          v1 SetVar val0;
+        (v2v≡⟨'c'⋄1⟩) ∧ opid≡3? # x÷1
+          @;
+        # default:
+          AddInstr opid‿v1‿v1v‿v2v
+      }
+    }
+  }¨ 𝕩
+  IncUsage 3⊑vars
+  
+  res ← ∾⟨"{",1↓∾"‿i"⊸∾¨•Repr¨↕14,"←𝕩⋄RTZ←××⌊∘|",nl⟩
+  GenOp ← {
+    𝕨𝕊'c'‿n: •Repr n;
+    𝕨𝕊'r'‿n: 𝕨{1<n⊑instrUsage? "t"∾•Repr n; {"("∾𝕩∾")"}⍟𝕨 GenInstr n⊑instrs}𝕩;
+    𝕨𝕊'i'‿n: "i"∾•Repr n;
+    "idk"
+  }
+  GenInstr ← { opid‿l‿r:
+    {
+      opid≡4? ∾⟨         1 GenOp r ⋄ "|" ⋄ 0 GenOp l⟩;
+      opid≡3? ∾⟨"RTZ " ⋄ 1 GenOp l ⋄ "÷" ⋄ 0 GenOp r⟩;
+      ∾⟨1 GenOp l ⋄ opid ⊑ ""‿"+"‿"×"‿"((××⌊∘|)÷)"‿"|˜"‿"=" ⋄ 0 GenOp r⟩
+    }
+  }
+  (↕≠instrs) {res∾↩ ∾⟨"t",•Repr𝕨,"←",GenInstr 𝕩,nl⟩}¨○((instrUsage>1)⊸/) instrs
+  •BQN res ∾ ∾⟨0 GenOp 3⊑vars ⋄ nl,"}"⟩
+}
+
+# f ← Train l # compile to trains
+# f ← Comp l # simple transpilation to BQN
+f ← OptComp l # SSAified transpilation to BQN with constant folding
+
+# •Show 2e5 F•_timed 14⥊5
+# ! 4154727576 ≡ F 10|↕14
 
 
 Any ← { # guesses if the prefix 𝕩 gives any valid model numbers
