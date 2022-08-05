@@ -1,8 +1,7 @@
 #!/usr/bin/env cbqn
-Sq ← •internal.Squeeze
 l ← •FLines ≠◶"2.in"‿⊑ •args
-t ← Sq ⊑¨l
-m ← Sq '0'-˜¯1⊑¨l
+t ← ⊑¨l
+m ← '0'-˜¯1⊑¨l
 
 f ← 'f'=t
 d ← (t='d')-t='u'

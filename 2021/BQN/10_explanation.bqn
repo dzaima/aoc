@@ -18,7 +18,7 @@
 # inner dfn:
   {(1+2× 0⊑∘⊐˜ =´˘∘‿2⥊ 𝕩∾9⥊˜2|≠𝕩) ⊑ 𝕨∾oob} # whole thing for reference
                        𝕩∾9⥊˜2|≠𝕩           # append a 9 to 𝕩 if the length is odd: 1‿1‿1‿1‿0‿3‿2‿9
-                  ∘‿2⥊                     # reshape into two columns: >⟨1‿1,1‿1,0‿3,2‿9⟩
+                  ∘‿2⥊                     # reshape into two columns: [1‿1,1‿1,0‿3,2‿9]
                =´˘                         # check if columns are equal: 1‿1‿0‿0
          0⊑∘⊐˜                             # find index of first mismatch: 2; This gives us the first mismatched character at the current depth
                                            # in the string "()()[}<", that's pointing at the 3rd bracket pair
