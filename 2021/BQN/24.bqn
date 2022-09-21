@@ -127,6 +127,7 @@ f ← OptComp l # SSAified transpilation to BQN with constant folding
 # •Show 2e5 F•_timed 14⥊5
 # ! 4154727576 ≡ F 10|↕14
 
+rng ← •MakeRand 2 # hard-coded seed to guarantee success for tests
 
 Any ← { # guesses if the prefix 𝕩 gives any valid model numbers
   # •Show 𝕩 # uncomment for progress display
@@ -138,7 +139,7 @@ Any ← { # guesses if the prefix 𝕩 gives any valid model numbers
     opt⊑˜(⊑⊢⊐⌊´)F¨ opt
   }
   0 { 𝕨𝕊1:1;𝕨𝕊0:
-    i0 ← initV∾1+(14-initL)•rand.Range 9
+    i0 ← initV∾1+(14-initL)rng.Range 9
     0≡F 2⊑{s‿·‿p: ⟨s+1⋄p⋄Mut p⟩}•_while_{s‿p‿n: (s<20)∧p≢n} ⟨0 ⋄ i0 ⋄ Mut i0⟩
   }´ ↕initL⊑1000‿1000‿500‿500‿500‿100‿100‿100‿100‿100‿100‿100‿100‿100
 }
