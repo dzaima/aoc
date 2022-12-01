@@ -1,6 +1,6 @@
 #!/usr/bin/env cbqn
 ⟨Split⟩ ← •Import "utils.bqn"
-Ex ← {(@+10) Split 1⊑ •SH ⋈⍟(1=≡)𝕩}
+Ex ← {(@+10) Split 1⊑ •SH ⋈ •file.At 𝕩}
 skip ← (¬⊑(<"all")∊•args)/⟨24⟩
 Test ← { 𝕊 n‿x‿o:
   {
