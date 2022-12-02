@@ -1,4 +1,4 @@
-# ⟨RB, B10, Num, Ints, SInts, Split⟩ ← •Import "utils.bqn"
+# ⟨RB, B10, Num, SInt, Ints, SInts, Split, SplitF, ReIndex, MDSlash, Unjoin, Count, GCD, LCM, _f_, _fi_, T⟩ ← •Import "utils.bqn"
 RB ⇐ 2⊸×⊸+˜´⌽
 B10 ⇐ 10⊸×⊸+˜´∘⌽
 Num ⇐ B10 -⟜'0'
@@ -9,7 +9,7 @@ Split ⇐ {((¯1+⊢×·+`»⊸<)¬𝕩=𝕨)⊔𝕩}
 SplitF ⇐ {((¯1+⊢×·+`»⊸<)¬𝕨⊸≡¨𝕩)⊔𝕩}
 ReIndex ⇐ {<˘𝕨|⎉1⌊𝕩÷⌜1«×`⌾⌽𝕨} # convert indices into a shape-⟨×´𝕨⟩ array into corresponding indices into a shape-𝕨 one
 MDSlash ⇐ {(0.13×≠⥊𝕩)>+´⥊𝕩? (≢𝕩) ReIndex /⥊𝕩; /○⥊⟜↕⟜≢ 𝕩}
-Unjoin ← {((≠¨𝕨)/↕≠𝕨) ⊔ 𝕩}
+Unjoin ⇐ {((≠¨𝕨)/↕≠𝕨) ⊔ 𝕩}
 Count ⇐ ⊐˜∘⊣⊏ ≠∘⊣↑ /⁼∘⊐
 GCD ⇐ {𝕨(|𝕊⍟(>⟜0)⊣)𝕩}
 LCM ⇐ ×÷GCD
