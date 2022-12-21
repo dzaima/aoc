@@ -8,7 +8,7 @@ v ← {⟨a⟩: Num a; a‿b‿c: ⟨a,c,⊑⟜+‿-‿×‿÷⊑"+-*/"⊐b⟩}�
 v n⊸⊐⌾(∾¯1↓¨(3=≠¨v)⊸/) ↩
 
 Get ← {
-  a‿b‿c: (∨´3=•Type¨got)◶⟨C, {𝕎C𝕏}⟩´ got ← Get¨ a‿b;
+  a‿b‿c: ∨○(3=•Type)◶⟨{𝕨C𝕩}, {𝕎C𝕏}⟩´ Get¨ a‿b;
   𝕩
 } {𝕩⊑v}
 
