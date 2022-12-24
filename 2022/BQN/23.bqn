@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨RB, B10, Num, SInt, Ints, SInts, Split, SplitF, ReIndex, MDSlash, Unjoin, Count, GCD, LCM, _fx_, _fi_, T⟩ ← •Import "utils.bqn"
+⟨_fx_⟩ ← •Import "utils.bqn"
 l ← '#'=>•FLines ≠◶"23.in"‿⊑ •args
 
 Step ← {
