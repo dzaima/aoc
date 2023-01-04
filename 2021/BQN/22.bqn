@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨RB, B10, Num, Ints, SInts, Split⟩ ← •Import "utils.bqn"
+⟨SInts, Repr⟩ ← •Import "utils.bqn"
 l ← {⟨'n'=1⊑𝕩 ⋄ 0‿1+<˘⍉3‿2⥊SInts𝕩⟩}¨ •FLines ≠◶"22.in"‿⊑ •args
 
 # remove 𝕩 from the cube 𝕨; assumes there actually is an intersection
@@ -44,4 +44,4 @@ Do ← {
 }
 
 •Show Do {⟨v⋄s‿e⟩: ∧´ (s≥¯50)∧e≤50}¨⊸/ l
-•Show Do l
+•Out Repr Do l
