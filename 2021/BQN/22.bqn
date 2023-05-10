@@ -28,9 +28,8 @@ Do ← {
         iv ← pos⊑¨¨rs‿re
         pos Add¨ as‿ae Diff iv;
     ·𝕊·:
-    # long version of `rs‿re∾¨¨↩ 𝕩` as ¨ keeps references unnecessarily; 50% boost; TODO don't
-      rs{x‿y‿z←𝕨 ⋄ ax‿ay‿az←𝕩 ⋄ ⟨x∾ax,y∾ay,z∾az⟩}↩0⊑𝕩
-      re{x‿y‿z←𝕨 ⋄ ax‿ay‿az←𝕩 ⋄ ⟨x∾ax,y∾ay,z∾az⟩}↩1⊑𝕩
+      rs‿re∾¨¨↩ 𝕩
+      @
   }
   Sub ← {𝕊as‿ae:
     i ← ∧´(as<re)∧ae>rs
