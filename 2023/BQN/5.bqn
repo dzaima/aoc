@@ -2,18 +2,17 @@
 ⟨Ints, SplitF⟩ ← •Import "utils.bqn"
 l ← ⟨⟩SplitF •FLines ≠◶"5.in"‿⊑ •args
 s ← Ints ⊑⊑l
-l ↩ {Ints¨ 1↓𝕩}¨ 1↓l
+l ↩ {<˘⍉>Ints¨ 1↓𝕩}¨ 1↓l
 
-•Show ⌊´s {
-  d‿s‿l ← <˘⍉>𝕩
+•Show ⌊´s { 𝕨 𝕊 d‿s‿l:
   𝕨 + +˝˘ (d-s) ×⎉1 (𝕨 ≥⌜ s) ∧ 𝕨 <⌜ s+l
 }˜´⌽ l
 
 # current range set represented by ⟨list of starts ⋄ list of ends (exclusive)⟩
-•Show ⌊´⊑ (<˘ +` ⍉ ∘‿2⥊s) {
-  vs‿ve ← 𝕨 # previous sets
-  [d,s,l] ← ⍉>𝕩 # current mapping per-column
-  ds ← d-s # delta from a given mapping when it matches
+•Show ⌊´⊑ (<˘ +` ⍉ ∘‿2⥊s) { vs‿ve 𝕊 d‿s‿l:
+  # vs,ve: start/end of previous sets
+  # d,s,l: current mappings, serparated into columns
+  ds ← d-s # delta a given mapping applies when matched
   
   ak ← ⍷∧vs∾ve∾s∾s+l # all key points at which values may change
   
