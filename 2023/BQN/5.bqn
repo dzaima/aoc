@@ -5,9 +5,8 @@ s ← Ints ⊑⊑l
 l ↩ {Ints¨ 1↓𝕩}¨ 1↓l
 
 •Show ⌊´s {
-  𝕨 + +˝˘𝕨 { 𝕨𝕊d‿s‿l:
-    (d-s) × (𝕨≥s) ∧ 𝕨<s+l
-  }⌜ 𝕩
+  d‿s‿l ← <˘⍉>𝕩
+  𝕨 + +˝˘ (d-s) ×⎉1 (𝕨 ≥⌜ s) ∧ 𝕨 <⌜ s+l
 }˜´⌽ l
 
 # current range set represented by ⟨list of starts ⋄ list of ends (exclusive)⟩
