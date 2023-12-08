@@ -10,8 +10,8 @@ ReIndex ⇐ {<˘𝕨|⎉1⌊𝕩÷⌜1«×`⌾⌽𝕨} # convert indices into a 
 MDSlash ⇐ {(0.13×≠⥊𝕩)>+´⥊𝕩? (≢𝕩) ReIndex /⥊𝕩; /○⥊⟜↕⟜≢ 𝕩}
 Unjoin ⇐ {((≠¨𝕨)/↕≠𝕨) ⊔ 𝕩}
 Count ⇐ ⊐˜∘⊣⊏ ≠∘⊣↑ /⁼∘⊐
-GCD ⇐ {𝕨(|𝕊⍟(>⟜0)⊣)𝕩}
-LCM ⇐ ×÷GCD
+GCD ⇐ •math.GCD
+LCM ⇐ •math.LCM
 _fx_ ⇐ {F _𝕣_ 𝔾 𝕩: ⊑{p‿n:n⋈F n}•_while_(𝔾´) 𝕩⋈𝔽𝕩} # fixed-point
 _fi_ ⇐ {F _𝕣_ 𝔾 𝕩: ¯1↓{𝕩∾<F ¯1⊑𝕩}•_while_(𝔾´¯2↑⊢) 𝕩⋈𝔽𝕩} # fixed-point with immediates
 T ⇐ {
