@@ -8,6 +8,7 @@ Split ⇐ {((¯1+⊢×·+`»⊸<)¬𝕩=𝕨)⊔𝕩}
 SplitF ⇐ {((¯1+⊢×·+`»⊸<)¬𝕨⊸≡¨𝕩)⊔𝕩}
 ReIndex ⇐ {<˘𝕨|⎉1⌊𝕩÷⌜1«×`⌾⌽𝕨} # convert indices into a shape-⟨×´𝕨⟩ array into corresponding indices into a shape-𝕨 one
 MDSlash ⇐ {(0.13×≠⥊𝕩)>+´⥊𝕩? (≢𝕩) ReIndex /⥊𝕩; /○⥊⟜↕⟜≢ 𝕩}
+MDSlashI ⇐ {<˘⍉> MDSlash 𝕩}
 Unjoin ⇐ {((≠¨𝕨)/↕≠𝕨) ⊔ 𝕩}
 Count ⇐ ⊐˜∘⊣⊏ ≠∘⊣↑ /⁼∘⊐
 GCD ⇐ •math.GCD
