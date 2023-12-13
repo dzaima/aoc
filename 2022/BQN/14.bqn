@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨Ints⟩ ← •Import "utils.bqn"
+⟨Ints⟩ ← •Import "../../utils/utils.bqn"
 i ← ∾{2↕∘‿2⥊𝕩}∘Ints¨•FLines ≠◶"14.in"‿⊑ •args
 
 Set1 ← {𝕨 1⌾((+´𝕩×1«≢𝕨)⊑⥊)↩}

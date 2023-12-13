@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨SInts⟩ ← •Import "utils.bqn"
+⟨SInts⟩ ← •Import "../../utils/utils.bqn"
 l ← SInts •FChars ≠◶"20.in"‿⊑ •args
 
 F ← { am 𝕊 l:
