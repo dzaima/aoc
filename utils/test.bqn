@@ -2,6 +2,7 @@
 year ← •args
 utils ← •Import "utils.bqn"
 AtYear ← year.path •file.At ⊢
+expMap ← (•HashMap˜⟨⟩) {𝕩.Set´𝕨}´ year.exp
 
 
 MakeBQN ← { 𝕊 ⟨Show, Out, Import⟩:
@@ -65,7 +66,7 @@ RunTests ← { 𝕊:
   fail ← 0
   
   { 𝕊 ⟨name⟩:
-    exp ← year.exp.Get {𝕩/˜∧`𝕩∊'0'+↕10} 𝕩.path
+    exp ← expMap.Get {𝕩/˜∧`𝕩∊'0'+↕10} 𝕩.path
     tested+↩ 1
     log.Clear@
     f ← name log.BQN 𝕩.srcBlock
