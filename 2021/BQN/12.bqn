@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨Split⟩ ← •Import"utils.bqn"
+⟨Split⟩ ← •Import "../../utils/utils.bqn"
 rs‿re ← <˘⍉>'-'Split¨•FLines ≠◶"12.in"‿⊑ •args
 
 u ← ⍷rs∾re # unique caves

@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨RB⟩ ← •Import "utils.bqn"
+⟨RB⟩ ← •Import "../../utils/utils.bqn"
 l ← '#'=•FLines ≠◶"20.in"‿⊑ •args
 p ← "Ai16"•internal.Variation ⊑l # TODO remove that
 

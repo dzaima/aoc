@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨SInts, Repr⟩ ← •Import "utils.bqn"
+⟨SInts, Repr⟩ ← •Import "../../utils/utils.bqn"
 l ← {⟨'n'=1⊑𝕩 ⋄ 0‿1+<˘⍉3‿2⥊SInts𝕩⟩}¨ •FLines ≠◶"22.in"‿⊑ •args
 
 # remove 𝕩 from the cube 𝕨; assumes there actually is an intersection
