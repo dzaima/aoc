@@ -1,5 +1,5 @@
-#!/usr/bin/env cbqn
-⟨RB, B10, Num, SInts, Split, SplitF, ReIndex, MDSlash, Unjoin, Count, GCD, LCM, _fx_, _fi_, T⟩ ← •Import "utils.bqn"
+#!/usr/bin/env bqn
+⟨SInts⟩ ← •Import "../../utils/utils.bqn"
 l ← SInts¨ •FLines ≠◶"9.in"‿⊑ •args
 
 •Show +´{¯1⊑{+`(⊑𝕨)∾𝕩}´ ∾⟜0⌾(¯1⊑⊢) {𝕩∾<1↓+`⁼¯1⊑𝕩}•_while_{𝕊:∨´0≠¯1⊑𝕩} ⋈𝕩}¨ l

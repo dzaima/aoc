@@ -1,5 +1,5 @@
-#!/usr/bin/env cbqn
-⟨Ints⟩ ← •Import "utils.bqn"
+#!/usr/bin/env bqn
+⟨Ints⟩ ← •Import "../../utils/utils.bqn"
 l ← •FLines ≠◶"6.in"‿⊑ •args
 
 # Calc ← {+´ 𝕩 < ≠⊸-⊸× ↕𝕨} # basic O(n) array thing

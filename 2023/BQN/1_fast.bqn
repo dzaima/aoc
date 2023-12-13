@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 l ← •file.MapBytes ≠◶"1.in"‿⊑ •args
 ! (@+10) = ¯1⊑l
 

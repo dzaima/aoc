@@ -1,5 +1,5 @@
-#!/usr/bin/env cbqn
-⟨Split⟩ ← •Import "utils.bqn"
+#!/usr/bin/env bqn
+⟨Split⟩ ← •Import "../../utils/utils.bqn"
 l ← •FLines ≠◶"2.in"‿⊑ •args
 
 cols ← "red"‿"green"‿"blue"
