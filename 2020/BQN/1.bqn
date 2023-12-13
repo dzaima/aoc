@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨Num,MDSlash⟩ ← •Import "utils.bqn"
+⟨Num,MDSlash⟩ ← •Import "../../utils/utils.bqn"
 l ← Num¨ •FLines ≠◶"1.in"‿⊑ •args
 
 # basic brute force; fast enough, but we can do better

@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨Split,Num,_f_⟩ ← •Import "utils.bqn"
+⟨Split,Num,_fx_⟩ ← •Import "../../utils/utils.bqn"
 l ← •FLines ≠◶"7.in"‿⊑ •args
 
 p ← {
@@ -18,6 +18,6 @@ ri ← (∾ci) ⊔ (≠¨ci)/↕≠ci # reverse indices
 
 shiny ← ⊑ns⊐<"shiny gold"
 
-•Show ¯1+≠ {⍷𝕩∾∾𝕩⊏ri} _f_≢ ⋈shiny
+•Show ¯1+≠ {⍷𝕩∾∾𝕩⊏ri} _fx_≢ ⋈shiny
 
 •Show ⊑{s‿m‿l: ln←l⊏n ⋄ ⟨s+´∾m×ln ⋄ ((≠¨ln)/m)×∾ln ⋄ ∾l⊏ci⟩}•_while_{s‿m‿l:×≠l} ⟨0, ⋈1, ⋈shiny⟩
