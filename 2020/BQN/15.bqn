@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨Ints⟩ ← •Import "utils.bqn"
+⟨Ints⟩ ← •Import "../../utils/utils.bqn"
 l ← Ints •FChars ≠◶"15.in"‿⊑ •args
 
 # •Show ¯1⊑{𝕩∾⊑ (≠𝕩)⊸≠⊸× 1+ (1↓⌽𝕩)⊐¯1⊑𝕩}⍟(2020-≠) l

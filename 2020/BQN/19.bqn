@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨Num, Ints, SplitF, Split⟩ ← •Import "utils.bqn"
+⟨Num, Ints, SplitF, Split⟩ ← •Import "../../utils/utils.bqn"
 rules0‿messages ← ⟨⟩ SplitF •FLines ≠◶"19.in"‿⊑ •args
 
 r ← {
