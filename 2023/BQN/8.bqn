@@ -1,5 +1,4 @@
-#!/usr/bin/env cbqn
-⟨LCM⟩ ← •Import "utils.bqn"
+#!/usr/bin/env bqn
 l ← •FLines ≠◶"8.in"‿⊑ •args
 
 k‿lv‿rv ← <˘⍉> {⟨3↑𝕩, 3↑7↓𝕩, 3↑12↓𝕩⟩}¨ 2↓l
@@ -13,4 +12,4 @@ Loop ← { c←𝕨
 }
 
 •Show ("ZZZ"⊸≢¨ k) Loop "AAA"
-•Show LCM´ (('Z'≢2⊑⊢)¨ k)⊸Loop¨ ('A'=2⊑¨⊢)⊸/ k # works for input ¯\_(ツ)_/¯
+•Show •math.LCM´ (('Z'≢2⊑⊢)¨ k)⊸Loop¨ ('A'=2⊑¨⊢)⊸/ k # works for input ¯\_(ツ)_/¯

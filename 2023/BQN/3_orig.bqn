@@ -1,5 +1,5 @@
-#!/usr/bin/env cbqn
-⟨MDSlash⟩ ← •Import "utils.bqn"
+#!/usr/bin/env bqn
+⟨MDSlash⟩ ← •Import "../../utils/utils.bqn"
 l ← '.'∾˜˘>•FLines ≠◶"3.in"‿⊑ •args # adds a column of '.' so that there's always a '.' between adjacent numbers in deshape
 nadj ← ∨´¬∊⟜('.'∾'0'+↕10)¨ ∾'.'(⊢<⊸∾»˘⋈«˘)¨ l<⊸∾ '.'¨∘⊏⊸(»⋈«)l
 D←≥⟜'0'∧≤⟜'9'

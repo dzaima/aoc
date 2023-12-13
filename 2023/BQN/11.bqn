@@ -1,5 +1,5 @@
-#!/usr/bin/env cbqn
-⟨MDSlashI⟩ ← •Import "utils.bqn"
+#!/usr/bin/env bqn
+⟨MDSlashI⟩ ← •Import "../../utils/utils.bqn"
 l ← '#'=>•FLines ≠◶"11.in"‿⊑ •args
 
 Dist ← {+´∾ +´| (¯1↓↑)¨⊸- MDSlashI 𝕩}
