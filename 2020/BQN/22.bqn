@@ -26,9 +26,6 @@ Round ← {
 # Hash ← ⊢ ⋄ In ← {𝕨⊸≡¨ 𝕩}
 Hash ← 1e9⊸×⊸+´•Hash ⋄ In ← = # TODO hashmap
 
-ent ← •MonoTime@
-enn ← 0
-
 Game ← Hash⊸{
   p ← ⋈𝕨
   r ← {
