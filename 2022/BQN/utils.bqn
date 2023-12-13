@@ -1,4 +1,4 @@
-# ⟨RB, B10, Num, SInt, Ints, SInts, Split, SplitF, ReIndex, MDSlash, Unjoin, Count, GCD, LCM, _fx_, _fi_, T⟩ ← •Import "utils.bqn"
+# ⟨RB, B10, Num, SInt, Ints, SInts, Split, SplitF, ReIndex, MDSlash, Unjoin, Count, GCD, LCM, _fx_, _fi_, T⟩ ← •Import "../../utils/utils.bqn"
 RB ⇐ 2⊸×⊸+˜´⌽
 B10 ⇐ 10⊸×⊸+˜´∘⌽
 Num ⇐ B10 -⟜'0'

@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨SplitF, Ints, MDSlash⟩ ← •Import "utils.bqn"
+⟨SplitF, Ints, MDSlash⟩ ← •Import "../../utils/utils.bqn"
 b0‿m ← ⟨⟩SplitF •FLines ≠◶"22.in"‿⊑ •args
 b0 {>𝕩↑˜¨⌈´≠¨𝕩}↩
 b ← ¯1‿¯1⌽(2+≢b0)↑b0
