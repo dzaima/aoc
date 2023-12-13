@@ -1,5 +1,5 @@
 #!/usr/bin/env -S cbqn -M 2000
-⟨RB, B10, Num, Ints, SInts, Split⟩ ← •Import "utils.bqn"
+⟨RB, B10, Num, Ints, SInts, Split⟩ ← •Import "../../utils/utils.bqn"
 l ← <˘⍉>'A'-˜2‿3⊏'A'⊸≤⊸/¨•FLines ≠◶"23.in"‿⊑ •args
 
 scores ← 1‿10‿100‿1000

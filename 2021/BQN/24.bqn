@@ -1,5 +1,5 @@
 #!/usr/bin/env cbqn
-⟨SInt⟩ ← •Import "utils.bqn"
+⟨Num⟩ ← •Import "../../utils/utils.bqn"
 l ← •FLines ≠◶"24.in"‿⊑ •args
 
 # guesses a digit at a time, by trying 100…1000 (depending on position) random inputs (with some mutation)
@@ -25,7 +25,7 @@ Train ← {
             v2 ← (6⊑ins)-'w'
             Res ↩ (((v1⊑⊢) Op v2⊑⊢) v1 _set ⊢) Res;
           # else
-            n ← SInt 6↓ins
+            n ← Num 6↓ins
             Res ↩ (((v1⊑⊢) Op N) v1 _set ⊢) Res
         }
     }
@@ -51,7 +51,7 @@ Comp ← {
             v2 ← 6⊑ins
             res∾↩ ∾⟨v1,"↩",v1,op,v2,nl⟩;
           # else
-            n ← SInt 6↓ins
+            n ← Num 6↓ins
             #Res ↩ (((v1⊑⊢) Op N) v1 _set ⊢) Res
             res∾↩ ∾⟨v1,"↩",v1,op,•Repr n,nl⟩
         }
@@ -85,7 +85,7 @@ OptComp ← { 𝕊:
     {
       opid≡0? v1 SetVar ⟨'i'⋄inpCtr⟩ ⋄ inpCtr+↩1;
       v1v ← v1⊑vars
-      v2v ← {(≥⟜'w'∧≤⟜'z')6⊑ins? vars⊑˜'w'-˜6⊑ins; ⟨'c'⋄SInt 6↓ins⟩}
+      v2v ← {(≥⟜'w'∧≤⟜'z')6⊑ins? vars⊑˜'w'-˜6⊑ins; ⟨'c'⋄Num 6↓ins⟩}
       {
         "cc"≡⊑¨v1v‿v2v?
           v1 SetVar ⟨'c',v1v opid◶⟨@,+,×,(××⌊∘|)÷,|˜,=⟩○(1⊸⊑) v2v⟩;
