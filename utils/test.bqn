@@ -3,6 +3,7 @@ year ← •args
 utils ← •Import "utils.bqn"
 AtYear ← year.path •file.At ⊢
 expMap ← (•HashMap˜⟨⟩) {𝕩.Set´𝕨}´ year.exp
+exitCode ← 0
 
 
 MakeBQN ← { 𝕊 ⟨Show, Out, Import⟩:
@@ -20,6 +21,7 @@ MakeBQN ← { 𝕊 ⟨Show, Out, Import⟩:
         Chars ⇐ FChars
         Bytes ⇐ FBytes
       }
+      "exit"‿{𝕊: ! "Exit called"}
     ⟩
   }
   {⟨year.path, 𝕨⟩ BQN 𝕩}
@@ -73,8 +75,8 @@ RunTests ← { 𝕊:
     F @
     {𝕊: •Out ∾⟨"Failed ",name,": expected ",•Repr exp,", got ",•Repr log.res⟩ ⋄ fail↩1}⍟⊢ exp ≢ log.res
   }¨ 𝕩
+  exitCode⌊↩ fail
   •Out {fail≡0? ∾⟨•Repr tested," passed!"⟩; ∾⟨•Repr tested-fail, "/", •Repr tested⟩}
-  •Exit fail
 }
 
 RunPerf ← { 𝕊:
@@ -115,3 +117,4 @@ tests {
   "test": RunTests tests;
   "perf": timeEach RunPerf tests
 }¨ mode
+•Exit⍟⊢ exitCode
