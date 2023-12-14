@@ -1,5 +1,5 @@
 #!/usr/bin/env bqn
-⟨MDSlashI, _fx_⟩ ← •Import "../../utils/utils.bqn"
+⟨_fx_⟩ ← •Import "../../utils/utils.bqn"
 l ← ".#O" ⊐ >•FLines ≠◶"14.in"‿⊑ •args
 
 
