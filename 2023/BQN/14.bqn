@@ -8,11 +8,11 @@ main ← ⥊ (1¨l) ∾˘ 0¨⊏l
 zero ← ⥊ 0⥊˜1‿0+≢l
 Move ← { # filter a whole-array scan
   wm‿t1j‿tj1‿tj1s𝕊𝕩:
-  cs ← tj1 / ⥊⍉ (⊢∾¯1⊏⊢) >+`<˘2=𝕩 # TODO don't >F`<˘
+  cs ← tj1 / ⥊⍉ (⊢∾¯1⊏⊢) +`2=𝕩
   ls ← cs - »cs × tj1 / main
   xs ← / tj1s
   ys ← ls + t1j / inds
-  wm -˜ 2×¬ >≠`<˘ wm ≠ (≢𝕩) ⥊ 1¨⌾((xs+ys×≠𝕩)⊏⊢) zero
+  wm -˜ 2×¬ >≠` wm ≠ (≢𝕩) ⥊ 1¨⌾((xs+ys×≠𝕩)⊏⊢) zero
 }
 pre0‿pre1‿pre2‿pre3 ← {
   row1 ← 1¨⊏l
