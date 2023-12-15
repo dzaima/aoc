@@ -85,7 +85,9 @@ RunPerf ← { 𝕊:
     f ← o.name BQN o.srcBlock
     {
       '×'=⊑t? (F⊢-⟜1) •_while_× •ParseFloat 1↓t;
-      F @ ⋄ •Out ∾⟨o.name, ": ", FmtTime F _time_ (•ParseFloat t) @⟩
+      •internal.GC@
+      F @
+      •Out ∾⟨o.name, ": ", FmtTime F _time_ (•ParseFloat t) @⟩
     }
   }¨ 𝕩
   @
