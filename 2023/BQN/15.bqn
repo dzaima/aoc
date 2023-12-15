@@ -1,24 +1,37 @@
 #!/usr/bin/env bqn
-⟨Split⟩ ← •Import "../../utils/utils.bqn"
-l ← ','Split •FChars ≠◶"15.in"‿⊑ •args
-ht ← {(⌽↑⟜𝕩)¨ ↕≠𝕩} {256|17×𝕩}⍟(↕1+⌈´≠¨l) 17
-ht •internal.Squeeze¨↩ # 1.23ms → 1.05ms; TODO don't
+c ← •FChars ≠◶"15.in"‿⊑ •args
 
-H ← 256 | {+´ ((≠𝕩) ⊑ ht) × 𝕩-@}¨ # hash each
-•Show +´ H l
+cc ← ',' = c
+cs ← cc ∨ (∊⟜"=-" ∨ '0'⊸≤ ∧ ≤⟜'9') c
 
-vs ← ¯1⊑¨l           # values
+ht ← {256|17×𝕩}⍟(↕⌈´-⟜»/cc∾1) 1
+ht •internal.Squeeze¨↩ # 670us → 460us; TODO don't
+
+ic ← ↕≠c
+ci ← +`cc
+ca ← c-@
+HashTil ← { 𝕊m:
+  rm ← ⌽m
+  hm ← (⌽ ic - ⌈` (ic×rm) - ¬rm)⊏ht
+  ca × hm × ¬m
+}
+
+•Show +´ {256 | (1«cc) × 𝕩 - ⌈`𝕩×cc} +` 256 | HashTil cc
+
+vs ← (1«cc)/c        # values
 vd ← '-'=vs          # is value deleted here
-kt ← (vd-2) ↓¨ l     # key text
-kn ← ⊐kt             # keys as unique numbers
+kn ← ⊐ (cs-˜ cs¬⊸× +`cs∧¬»cs) ⊔ c # keys as unique numbers
 lm ← ∊⌾⌽kn           # last occurence mask
 fv ← ('0'-˜lm/vs)⌾((lm/kn)⊸⊏) ¯2⥊˜1+⌈´kn # map of key to final value
-kt‿kn‿vd (¬kn∊(lm∧vd)/kn)⊸/¨↩ # filter out entries whose last operation is deletion
+m1 ← ¬kn∊(lm∧vd)/kn  # entries whose last operation is deletion
+kn‿vd m1⊸/¨↩         # filter those out
 pm ← ⊒⌾⌽ kn          # progressive counter
 pl ← {⊑1⊐˜⌽𝕩}¨ kn⊔vd # progressive counter of last deletion
 wi ← ⍉[kn,   pm]     # reference index
 ti ← ⍉[↕≠pl, pl-1]   # target reference index - first entry after last deletion
 tm ← wi∊ti           # mask of entries at the target
 
-MP ← {𝕩 × 1+↕≠𝕩} # multiply by position
-•Show +´ ∾ MP MP¨ (H tm/kt) ⊔ (tm/kn)⊏fv # group values by hashes & compute result
+fhs ← 256| +´¨ ci ⊐⊸⊔○((ci∊tm//m1)⊸/) HashTil cs # final filtered hashes
+fvs ← (tm/kn) ⊏ fv   # final filtered values
+fvs×↩ 1 + ⊒fhs       # multiply values by their index in their bucket
+•Show +´ fvs × 1+fhs # multiply by bucket number, sum
