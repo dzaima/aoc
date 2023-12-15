@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 l ← ".>v"⊐>•FLines ≠◶"25.in"‿⊑ •args
 
 Step ← {

@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 ⟨RB, B10, Num, Ints, SInts, Split⟩ ← •Import "../../utils/utils.bqn"
 l ← 1⊑⟜Ints¨•FLines ≠◶"21.in"‿⊑ •args
 

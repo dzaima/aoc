@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 ⟨_fx_⟩ ← •Import "../../utils/utils.bqn"
 l ← '#'=>•FLines ≠◶"23.in"‿⊑ •args
 Step ← {

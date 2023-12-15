@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 l ← '#'=•FLines ≠◶"3.in"‿⊑ •args
 
 F ← { r‿d:

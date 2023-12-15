@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 {
   exp ⇐ ⟨
     ⟨"1",  1564‿1611⟩

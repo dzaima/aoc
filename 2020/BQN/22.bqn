@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 ⟨Num, SplitF⟩ ← •Import "../../utils/utils.bqn"
 cards ← Num¨¨ 1↓¨ ⟨⟩ SplitF •FLines ≠◶"22.in"‿⊑ •args
 

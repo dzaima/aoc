@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 # iterates through compressed range points, sees which cube it intersected with last
 
 ⟨RB, B10, Num, Ints, SInts, Split⟩ ← •Import "../utils.bqn"

@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 ⟨Ints⟩ ← •Import "../../utils/utils.bqn"
 l ← {(Ints 𝕩)/(𝕩∊"RLUD")/𝕩} •FChars ≠◶"9.in"‿⊑ •args
 

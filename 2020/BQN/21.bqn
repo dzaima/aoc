@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 ⟨Split⟩ ← •Import "../../utils/utils.bqn"
 l ← •FLines ≠◶"21.in"‿⊑ •args
 [is0,as0] ← ⍉>{' 'Split𝕩}‿{1↓¨','Split ¯1↓8↓𝕩}⊸({𝕎𝕩}¨)¨ '(' Split¨ l # ingredients, allergens

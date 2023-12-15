@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 ⟨Ints, MDSlash⟩ ← •Import "../../utils/utils.bqn"
 l ← Ints •FChars ≠◶"9.in"‿⊑ •args
 w ← 25
