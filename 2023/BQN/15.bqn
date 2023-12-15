@@ -1,10 +1,11 @@
 #!/usr/bin/env bqn
 c ← •FChars ≠◶"15.in"‿⊑ •args
 
-cc ← ',' = c # commas
+cc ← ',' = c       # commas
 cs ← cc ∨ (∊⟜"=-" ∨ '0'⊸≤ ∧ ≤⟜'9') c # non-key character
-ce ← 1«cc # end of an entry
+ce ← 1«cc          # end of an entry
 el ← (⊢-¯1»⊢)/cc∾1 # entry lengths
+ea ← -⟜1⌾⊑ el      # entry allocated length in input (comma goes to the entry following it)
 
 ca ← c-@
 ic ← ↕≠c
@@ -16,7 +17,7 @@ _hashTil ← { b 𝔽 _𝕣 m:
   {𝕩 - ⌈`𝕩×b} +` 𝔽 256 | ca × hm × ¬m
 }
 
-•Show +´ 256 | ce × cc ⊢_hashTil cc
+•Show +´ 256 | ce / cc ⊢_hashTil cc
 
 vs ← ce / c          # values
 vd ← '-' = vs        # is value deleted here
@@ -27,15 +28,15 @@ ld ← ¬kn∊(lo∧vd)/kn  # entries whose last operation is deletion
 kn‿vd ld⊸/¨ ↩        # filter those out
 pm ← ⊒⌾⌽ kn          # progressive counter
 pl ← {               # progressive counter of last deletion
-  c ← /⁼ kn
-  s ← (1+↕≠c) ∾ vd×kn+1
-  t ← 1 ↓ s ⍋⊸⊏○((∊⌾⌽s)⊸/) c∾pm
+  c ← /⁼ kn                 # fake progressive counter for each unique key for fake deletes
+  s ← (1+↕≠c) ∾ vd×kn+1     # a non-zero element n at index i means that, at time i (which can be of a fake delete), key n+1 is deleted
+  1 ↓ s ⍋⊸⊏○((∊⌾⌽s)⊸/) c∾pm # filter progressive counters to last delete, sort by key
 }
 wi ← ⍉[kn,   pm]     # reference index
 ti ← ⍉[↕≠pl, pl-1]   # target reference index - first entry after last deletion
 tm ← wi∊ti           # mask of entries at the target
-cb ← ≠⟜» /tm/ld/-⟜1⌾⊑ el # beginning of included in partially-filtered hash list
-fhs ← 256 | (1«cb) / cb (1↓el/(≠el)↑/⁼tm//ld)⊸/ _hashTil cs # final filtered hashes
+cb ← ≠⟜» /tm/ld/ea   # beginning of included in partially-filtered hash list
+fhs ← 256 | (1«cb) / cb (ea/(≠ea)↑/⁼tm//ld)⊸/ _hashTil cs # final filtered hashes
 fvs ← (tm/kn) ⊏ fv   # final filtered values
 fvs×↩ 1 + ⊒fhs       # multiply values by their index in their bucket
 •Show +´ fvs × 1+fhs # multiply by bucket number, sum
