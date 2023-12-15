@@ -2,10 +2,10 @@
 ⟨Split⟩ ← •Import "../../utils/utils.bqn"
 l ← ','Split •FChars ≠◶"15.in"‿⊑ •args
 ht ← {(⌽↑⟜𝕩)¨ ↕≠𝕩} {256|17×𝕩}⍟(↕1+⌈´≠¨l) 17
-ht •internal.Squeeze¨↩ # 1.35ms → 1.17ms; TODO don't
+ht •internal.Squeeze¨↩ # 1.23ms → 1.05ms; TODO don't
 
-H ← {256| +´ ((≠𝕩) ⊑ ht) × 𝕩-@}
-•Show +´ H¨ l
+H ← 256 | {+´ ((≠𝕩) ⊑ ht) × 𝕩-@}¨ # hash each
+•Show +´ H l
 
 vs ← ¯1⊑¨l           # values
 vd ← '-'=vs          # is value deleted here
@@ -21,4 +21,4 @@ ti ← ⍉[↕≠pl, pl-1]   # target reference index - first entry after last d
 tm ← wi∊ti           # mask of entries at the target
 
 MP ← {𝕩 × 1+↕≠𝕩} # multiply by position
-•Show +´ ∾ MP MP¨ (H¨ tm/kt) ⊔ (tm/kn)⊏fv # group values by hashes & compute result
+•Show +´ ∾ MP MP¨ (H tm/kt) ⊔ (tm/kn)⊏fv # group values by hashes & compute result
