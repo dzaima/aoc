@@ -12,7 +12,7 @@ Move ← { # filter a whole-array scan
   ls ← cs - »cs × tj1 / main
   xs ← / tj1s
   ys ← ls + t1j / inds
-  wm -˜ 2×¬ >≠` wm ≠ (≢𝕩) ⥊ 1¨⌾((xs+ys×≠𝕩)⊏⊢) zero
+  wm -˜ 2×¬ ≠` wm ≠ (≢𝕩) ⥊ 1¨⌾((xs+ys×≠𝕩)⊏⊢) zero
 }
 pre0‿pre1‿pre2‿pre3 ← {
   row1 ← 1¨⊏l
