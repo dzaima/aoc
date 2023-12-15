@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 # version doing scalar calculations
 ⟨RB, B10, Num, Ints, Split⟩ ← •Import "../utils.bqn"
 l ← ⊑•FLines ≠◶"../17.in"‿⊑ •args

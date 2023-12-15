@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 l ← {+´(⌽5⋆↕≠𝕩)×¯2+𝕩⊐˜"=-012"}¨ •FLines ≠◶"25.in"‿⊑ •args
 r ← ""
 {r∾↩ n←¯5⊸+⍟(>⟜2) 5|𝕩 ⋄ 5÷˜ 𝕩-n}•_while_{0≠𝕩} +´l

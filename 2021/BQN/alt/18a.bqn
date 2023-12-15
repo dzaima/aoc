@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 
 # recursion based, with nested arrays everywhere
 P ← •BQN {'⟨'¨⌾(('['=𝕩)⊸/) 𝕩}∘{'⟩'¨⌾((']'=𝕩)⊸/) 𝕩}

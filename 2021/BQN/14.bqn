@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 l ← •FLines ≠◶"14.in"‿⊑ •args
 chrs ← (∊⟜('A'+↕26))⊸/ ⍷∾l # unique characters
 w ← ≠chrs

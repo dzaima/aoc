@@ -1,4 +1,4 @@
-#!/usr/bin/env -S cbqn -M 4200
+#!/usr/bin/env -S bqn -M 4200
 # stores an array of whether each point is on, and sets them for each cube
 # CBQN make command to make this faster:
 # make t=day22 f='-DCHECK_VALID=0 -march=native -O3' singeli=1 c

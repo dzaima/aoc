@@ -1,4 +1,4 @@
-#!/usr/bin/env cbqn
+#!/usr/bin/env bqn
 l ← •FLines ≠◶"18.in"‿⊑ •args
 
 BQNify ← {𝕩 '×'¨⌾(('*'=𝕩)⊸/) ↩}
