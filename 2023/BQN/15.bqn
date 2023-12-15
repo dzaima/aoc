@@ -10,7 +10,6 @@ ea ← -⟜1⌾⊑ el      # entry allocated length in input (comma goes to the 
 ca ← c-@
 ic ← ↕≠c
 ht ← {256|17×𝕩}⍟(↕⌈´el) 1
-ht •internal.Squeeze↩ # 437us → 232us; TODO don't
 _hashTil ← { b 𝔽 _𝕣 m:
   rm ← ⌽m
   hm ← (⌽ ic - ⌈` (ic×rm) - ¬rm)⊏ht
@@ -29,9 +28,9 @@ kn‿vd ld⊸/¨ ↩        # filter those out
 pm ← ⊒⌾⌽ kn          # progressive counter
 wi ← ⍉[kn,pm]        # reference index for each key
 ti ← {               # target reference index - first entry after last deletion
-  c ← /⁼ kn                   # fake progressive counter for each unique key for fake deletes
-  s ← (1+↕≠c) ∾ vd×kn+1       # a non-zero element n at index i means that, at time i (which can be of a fake delete), key n+1 is deleted
-  ⍉(s-1) ≍○((∊⌾⌽s)⊸/) ¯1+c∾pm # filter progressive counters to last delete, sort by key
+  c ← /⁼ kn                 # fake progressive counter for each unique key for fake deletes
+  s ← (1+↕≠c) ∾ vd×1+kn     # a non-zero element n at index i means that, at time i (which can be of a fake delete), key n+1 is deleted
+  ⍉¯1 + s ≍○((∊⌾⌽s)⊸/) c∾pm # filter progressive counters to last delete, sort by key
 }
 tm ← wi∊ti           # mask of entries at the target
 cb ← ≠⟜» /tm/ld/ea   # beginning of included in partially-filtered hash list
