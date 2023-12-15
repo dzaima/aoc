@@ -81,24 +81,25 @@ RunTests ← { 𝕊:
 
 RunPerf ← { 𝕊:
   bqn ← MakeBQN {Show⇐⊢ ⋄ Out⇐⊢ ⋄ import⇐utils}
-  𝕨 {
-    f ← 𝕩.name BQN 𝕩.srcBlock
-    F @
-    t ← F _time_ 𝕨 @
-    •Out ∾⟨𝕩.name, ": ", FmtTime t⟩
-    @
+  𝕨⊸{ t 𝕊 o:
+    f ← o.name BQN o.srcBlock
+    {
+      '×'=⊑t? (F⊢-⟜1) •_while_× •ParseFloat 1↓t;
+      F @ ⋄ •Out ∾⟨o.name, ": ", FmtTime F _time_ (•ParseFloat t) @⟩
+    }
   }¨ 𝕩
+  @
 }
 
 tests ← ⟨⟩
 mode ← ⟨⟩
-timeEach ← 0.1
+timeEach ← "0.1"
 {
   "all": tests∾↩ year.all;
   "most": tests∾↩ year.most;
   "orig": tests∾↩ year.orig;
   "test":     mode∾↩<"test";
-  "perf"≡4↑𝕩? mode∾↩<"perf" ⋄ {𝕊: timeEach↩•ParseFloat 4↓𝕩}⍟(4≠≠) 𝕩;
+  "perf"≡4↑𝕩? mode∾↩<"perf" ⋄ {𝕊: timeEach↩4↓𝕩}⍟(4≠≠) 𝕩;
   ⊑(⊑𝕩)∊'0'+↕10? tests∾↩ <𝕩;
   ! "Unknown argument -- "∾𝕩
 }¨ year.args
