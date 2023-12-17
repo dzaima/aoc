@@ -6,10 +6,12 @@ cs ← cc ∨ (∊⟜"=-" ∨ '0'⊸≤ ∧ ≤⟜'9') c # non-key character
 ce ← 1«cc          # end of an entry
 el ← (⊢-¯1»⊢)/cc∾1 # entry lengths
 ea ← -⟜1⌾⊑ el      # entry allocated length in input (comma goes to the entry following it)
+eml ← ⌈´el         # max entry length
+! eml ≤ 9          # kn only handles keys of up to 8 characters
 
 ca ← c-@
 ic ← ↕≠c
-ht ← {256|17×𝕩}⍟(↕⌈´el) 1
+ht ← {256|17×𝕩}⍟(↕eml) 1
 _hashTil ← { b 𝔽 _𝕣 m:
   rm ← ⌽m
   hm ← (⌽ ic - ⌈` (ic×rm) - ¬rm)⊏ht
@@ -20,7 +22,7 @@ _hashTil ← { b 𝔽 _𝕣 m:
 
 vs ← ce / c          # values
 vd ← '-' = vs        # is value deleted here
-kn ← ⊐ (((el+vd)>⌜3+↕8) × (/1∾cc)+⌜1+↕8) ⊏ '!'∾c
+kn ← ⊐ (((el+vd)>⌜3+↕8) × (/1∾cc)+⌜1+↕8) ⊏ '!'∾c # extract keys & map them to numbers
 lo ← ∊⌾⌽ kn          # last occurence mask
 fv ← ('0'-˜lo/vs)⌾((lo/kn)⊸⊏) ¯2⥊˜1+⌈´kn # map of key to final value
 ld ← ¬kn∊(lo∧vd)/kn  # entries whose last operation is deletion
