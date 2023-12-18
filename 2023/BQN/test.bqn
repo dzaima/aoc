@@ -30,7 +30,7 @@
   
   path ⇐ •path
   args ⇐ •args
-  all ⇐ •Repr¨ 1+↕17
-  most ⇐ all
+  all ⇐ •Repr¨ 1+↕18
+  most ⇐ (¬∊⟜"16"‿"17")⊸/ all
   orig ⇐ ∾⟜"_orig"¨ 1↓all
 } •Import "../../utils/test.bqn"
