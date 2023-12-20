@@ -47,12 +47,12 @@ _time_ ← { F _𝕣_ time x: # time for at least 𝕘 seconds, taking minimum o
   {𝕊: r⌊↩ F _time0_ tm x}•_while_{𝕊: (r≡∞) ∨ t1≥•MonoTime@} @
   r
 }
-Repr ← {i←⊑𝕩⊐'.' ⋄ i<≠𝕩? (1+𝕨+i)↑𝕩∾𝕨⥊'0'; 𝕩∾'.'∾𝕨⥊'0'}⟜•Repr
-FmtTime ⇐ {
-  𝕩<1e¯6? "ns"∾˜2 Repr 𝕩×1e9;
-  𝕩<1e¯3? "us"∾˜2 Repr 𝕩×1e6;
-  𝕩<1?    "ms"∾˜3 Repr 𝕩×1e3;
-           "s"∾˜4 Repr 𝕩
+TRepr ← {i←⊑𝕩⊐'.' ⋄ i<≠𝕩? (1+𝕨+i)↑𝕩∾𝕨⥊'0'; 𝕩∾'.'∾𝕨⥊'0'}⟜•Repr
+FmtTime ← {
+  𝕩<1e¯6? "ns"∾˜2 TRepr 𝕩×1e9;
+  𝕩<1e¯3? "us"∾˜2 TRepr 𝕩×1e6;
+  𝕩<1?    "ms"∾˜3 TRepr 𝕩×1e3;
+           "s"∾˜4 TRepr 𝕩
 }
 
 
@@ -79,6 +79,7 @@ RunTests ← { 𝕊:
   •Out {fail≡0? ∾⟨•Repr tested," passed!"⟩; ∾⟨•Repr tested-fail, "/", •Repr tested⟩}
 }
 
+raw ← 0
 RunPerf ← { 𝕊:
   bqn ← MakeBQN {Show⇐⊢ ⋄ Out⇐⊢ ⋄ import⇐utils}
   𝕨⊸{ t 𝕊 o:
@@ -87,7 +88,7 @@ RunPerf ← { 𝕊:
       '×'=⊑t? (F⊢-⟜1) •_while_× •ParseFloat 1↓t;
       •internal.GC@
       F @
-      •Out ∾⟨o.name, ": ", FmtTime F _time_ (•ParseFloat t) @⟩
+      •Out {raw? ∾⟨o.name, " ", •Repr 𝕩⟩; ∾⟨o.name, ": ", FmtTime 𝕩⟩} F _time_ (•ParseFloat t) @
     }
   }¨ 𝕩
   @
@@ -100,6 +101,7 @@ timeEach ← "0.1"
   "all": tests∾↩ year.all;
   "most": tests∾↩ year.most;
   "orig": tests∾↩ year.orig;
+  "raw": raw↩1;
   "test":     mode∾↩<"test";
   "perf"≡4↑𝕩? mode∾↩<"perf" ⋄ {𝕊: timeEach↩4↓𝕩}⍟(4≠≠) 𝕩;
   ⊑(⊑𝕩)∊'0'+↕10? tests∾↩ <𝕩;
