@@ -1,5 +1,5 @@
 #!/usr/bin/env bqn
-⟨Split,_fx_⟩ ← •Import "../../utils/utils.bqn"
+⟨Split⟩ ← •Import "../../utils/utils.bqn"
 l ← {0‿1 + {•ParseFloat¨ ',' Split 𝕩}¨ '~' Split 𝕩}¨ •FLines ≠◶"22.in"‿⊑ •args
 
 {𝕩!∧´<´𝕩}¨ l
@@ -16,10 +16,10 @@ Min ← { di‿dh‿dj 𝕊 zC:
     ⟨∾(r≠𝕩)/dj, r⟩
   }´•_while_{×≠⊑𝕩} ⟨↕≠di, zC⟩
 }
-z2 ← di‿dh‿dj Min ∞¨ di
+z2 ← di‿dh‿dj Min (⌈´z1)¨ di
 •Show (≠l) - +´∊ ∾ (↕≠z2) {(1=≠)⊸/ ((𝕨⊑z2) = (𝕨⊑dh) + 𝕩⊏z2)/𝕩}¨ di # for each brick, filter its dependencies to those that are directly below it, and report if there's only one such
 
 •Show +´ { # for each brick, remove that brick & minimize
   keep ← di≠𝕩
-  +´ z2 ≠ ⟨keep/¨di, keep/¨dh, dj⟩⊸Min _fx_≢ z2
+  +´ z2 ≠ ⟨keep/¨di, keep/¨dh, dj⟩ Min z2
 }¨ ↕≠l
