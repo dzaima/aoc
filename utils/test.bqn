@@ -20,6 +20,7 @@ MakeBQN ← { 𝕊 ⟨Show, Out, Import⟩:
         Lines ⇐ FLines
         Chars ⇐ FChars
         Bytes ⇐ FBytes
+        MapBytes ⇐ {•file.MapBytes AtYear 𝕩}
       }
       "exit"‿{𝕊: ! "Exit called"}
     ⟩
