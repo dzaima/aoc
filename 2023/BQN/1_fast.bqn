@@ -34,7 +34,7 @@ Filter ← ∊⟜((@+10)∾'1'+↕9)⊸/
   uv ← 𝕩⊸=¨ unq
   shifts ← {𝕏 uv}¨ doShifts
   ands ← {𝕏 shifts}¨ doAnds
-  𝕩 ↩ 𝕩 + +´ mults × ands
+  𝕩 ↩ 𝕩 + ⌊´ mults × ands
   𝕩 ↩ Filter 𝕩
   part2+↩ FirstLast 𝕩
   @
