@@ -7,20 +7,20 @@ exitCode ← 0
 
 
 MakeBQN ← { 𝕊 ⟨Show, Out, Import⟩:
-  flc‿fcc‿fbc ← {𝕊: •HashMap˜⟨⟩}¨ ↕3
+  flc‿fcc‿fbc‿fmc ← {𝕊: •HashMap˜⟨⟩}¨ ↕4
   bqn ← •ReBQN {
     system ⇐ •listsys {𝕩∾𝕨/˜¬𝕨∊⊑¨𝕩} ⟨
       "show"‿Show
       "out"‿Out
       "import"‿Import
       ⟨"flines", FLines←{flc.Has 𝕩? flc.Get 𝕩; 𝕩 flc.Set v←•FLines AtYear 𝕩 ⋄ v}⟩
-      ⟨"fchars", FChars←{flc.Has 𝕩? flc.Get 𝕩; 𝕩 flc.Set v←•FChars AtYear 𝕩 ⋄ v}⟩
-      ⟨"fbytes", FBytes←{flc.Has 𝕩? flc.Get 𝕩; 𝕩 flc.Set v←•FBytes AtYear 𝕩 ⋄ v}⟩
+      ⟨"fchars", FChars←{fcc.Has 𝕩? fcc.Get 𝕩; 𝕩 fcc.Set v←•FChars AtYear 𝕩 ⋄ v}⟩
+      ⟨"fbytes", FBytes←{fbc.Has 𝕩? fbc.Get 𝕩; 𝕩 fbc.Set v←•FBytes AtYear 𝕩 ⋄ v}⟩
       "file"‿{
+        MapBytes ⇐      {fmc.Has 𝕩? fmc.Get 𝕩; 𝕩 fmc.Set v←•file.MapBytes AtYear 𝕩 ⋄ v}
         Lines ⇐ FLines
         Chars ⇐ FChars
         Bytes ⇐ FBytes
-        MapBytes ⇐ {•file.MapBytes AtYear 𝕩}
       }
       "exit"‿{𝕊: ! "Exit called"}
     ⟩
