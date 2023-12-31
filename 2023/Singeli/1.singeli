@@ -1,0 +1,248 @@
+include 'util/tup'
+include 'util/functionize'
+include 'cbqn/src/singeli/src/base'
+include 'cbqn/src/singeli/src/vecfold'
+include 'cbqn/src/singeli/src/bmi2'
+def muladdh{a:[32]u8,  b:[32]i8}  = emit{[16]i16, '_mm256_maddubs_epi16', a, b}
+def muladdh{a:[16]i16, b:[16]i16} = emit{[8]i32, '_mm256_madd_epi16', a, b}
+
+require{'string.h'}
+def memcpy{dst, src, n} = emit{void, 'memcpy', dst, src, n}
+
+include 'clib/malloc'
+def allocAligned{n, al} = {
+  all:*u8 = alloc{u8, n + al}
+  off:= *u8 ~~ ((ux~~all + (al-1)) & ~u64~~(al-1))
+  tup{off, {} => free{all}}
+}
+
+
+
+# ascii of "one","two","three","four","five","six","seven","eight","nine"
+def names = tup{tup{111,110,101},tup{116,119,111},tup{116,104,114,101,101},tup{102,111,117,114},tup{102,105,118,101},tup{115,105,120},tup{115,101,118,101,110},tup{101,105,103,104,116},tup{110,105,110,101}}
+
+def names_key = each{{{_, a,b, ..._}} => (a+b) % 16, names} # for each name, the unique key from a[1]+a[2]
+def name_map = each{{i}=>fold{+, (names_key==i) * range{9}}, range{16}} # key → name map
+
+def mapNamesVec{V, a:*u8} = {
+  def lds = each{{o} => load{*V~~(a+o)}, range{5}}
+  
+  def key = (tupsel{1,lds} + tupsel{2,lds}) & V**15
+  def tab{G} = { # effectively do G{key} via a table lookup
+    def r = each{G, name_map}
+    sel{[16]u8, make{V, merge{r,r}}, key}
+  }
+  
+  # for each of the 5 offsets, do a table lookup of the expected character, and test if it matches
+  def correct = ty_s{tree_fold{&, each{{o} => {
+    exp:= tab{{i} => {
+      def n = tupsel{i, names}
+      if (o >= tuplen{n}) 255 else tupsel{o,n}
+    }}
+    isExp:= exp == tupsel{o,lds}
+    if (o<3) isExp else isExp|exp
+  }, range{5}}}} # < ty_s{V} ** 0
+  
+  topBlend{tupsel{0,lds}, tab{{i} => 49+i}, correct}
+}
+
+def mapNamesLoop{V, r, x, n} = {
+  xC:= x
+  rC:= *V~~r
+  xE:= x+n
+  while (xC < xE) {
+    store{rC, 0, mapNamesVec{V, xC}}
+    xC+= 32
+    rC+= 1
+  }
+}
+
+
+
+compress_tab:*u8 = join{each{ # table of [8]u8, offset is bits to compress by
+  {a} => {
+    def l = tuplen{a}
+    if (l==0) 8**255 else merge{a,(8-l)**select{a,l-1}}
+  },
+  fold{
+    {a, b} => merge{a, each{merge{.,b},a}},
+    tup{tup{}},
+    range{8}
+  }
+}}
+
+slide_tab:*u8 = join{each{ # table of [16]u8, offset is number of elements to take from first half
+  {i} => merge{range{i}, range{16-i}+8},
+  range{9}
+}}
+
+# compress [32]u8 via pshufb (4 lookups in 2KB table, align halves via slide_tab & another pshufb)
+def compress1{r:*u8, msk:u32, mskv:[32]u8, v:[32]u8, G} = {
+  def V = [32]u8
+  def H = [16]u8
+  def {p0,p1,p2,p3} = each{{sh} => compress_tab + ((msk>>sh) & 0xff)*8, tup{0,8,16,24}}
+  def los = pair{load{*H~~ p0   }, load{*H~~ p2   }}
+  def his = pair{load{*H~~(p1-8)}, load{*H~~(p3-8)}}
+  def tot = blend{[8]u32, los, his, 2b11001100}
+  def sel1 = sel{[16]u8, v, tot + make{V, replicate{8,tup{0,8,0,8}}}}
+  def sel2 = sel{[16]u8, sel1, pair{
+    load{*H~~(slide_tab + 16*popc{msk&0x0000_00ff})},
+    load{*H~~(slide_tab + 16*popc{msk&0x00ff_0000})}
+  }}
+  store{*H~~r, 0, half{sel2, 0}}
+  store{*H~~(r+popc{msk<<16}), 0, half{sel2, 1}}
+}
+
+# compress [32]u8 via pshufb (2 lookups in 2KB table) of 2x [8]u8 & pext of 2x u64
+def compress1{r:*u8, msk:u32, mskv:[32]u8, v:[32]u8, G} = {
+  def V = [32]u8
+  def H = [16]u8
+  def shl{sh} = load{*H ~~ (compress_tab + ((msk>>sh) & 0xff)*8)}
+  def tot = pair{shl{0}, shl{16}}
+  def sel1 = sel{[16]u8, v, tot}
+  # def pextg{i} = pext{extract{[4]u64~~v, i}, extract{[4]u64~~mskv, i}}
+  def pextg{i} = pext{G{i*8}, extract{[4]u64~~mskv, i}}
+  store{*H  ~~r,                 0, half{sel1, 0}}
+  store{*u64~~(r+popc{msk<<24}), 0, pextg{1}}
+  store{*H  ~~(r+popc{msk<<16}), 0, half{sel1, 1}}
+  store{*u64~~(r+popc{msk<< 8}), 0, pextg{3}}
+}
+
+# compress [32]u8 via a 1MB table
+def compress1{r:*u8, msk:u32, mskv:[32]u8, v:[32]u8, G} = {
+  def V = [32]u8
+  def H = [16]u8
+  def shl{off} = load{*H ~~ (emit{*u8, '', 'table16'} + off*16)}
+  def tot = pair{shl{msk&0xffff}, shl{msk>>16}}
+  def sel1 = sel{[16]u8, v, tot}
+  store{*H~~r,                 0, half{sel1, 0}}
+  store{*H~~(r+popc{msk<<16}), 0, half{sel1, 1}}
+}
+
+def sumFirstLast{V, x:*u8, n:ux} = { # reads past-the-end
+  r0:*u8 = alloc{u8, n + 64} # buffer for compressed data
+  
+  xC:= x
+  rC:= r0
+  def end = makelabel{}
+  def compSub = 0
+  while (1) { # compress to only digits & newlines, remap digits (49..57) to 1..9 (nl to -38 == 218)
+    v:= load{*V~~xC}
+    mv:= ty_s{v} < ty_s{V}**58 # ((v - V**49) < V**9)  |  (v == V**10)
+    m:= homMask{mv}
+    compress1{rC, m, mv, v - V**compSub, {o} => {
+      assert{compSub==0}
+      load{*u64~~(xC+o)}
+    }}
+    if (xC+32 >= x+n) {
+      left:= x+n - xC
+      rC+= popc{m & cast_i{u32, (u64~~1 << left) - 1}}
+      goto{end}
+    }
+    xC+= 32
+    rC+= popc{m}
+  }
+  setlabel{end}
+  store{*V~~rC, 0, V**(48-compSub)}
+  def count = rC-r0
+  
+  resv: = [4]u64**0
+  res1:V = V**0
+  res10:V = V**0
+  
+  cycle:u64 = 0
+  def cyc = makelabel{}
+  sC:= r0
+  while (sC < r0+count) {
+    def lo{o} = load{*V~~(sC+o), 0}
+    m:= lo{1} == V**((10-compSub) & 0xff)
+    res1 += m & (lo{0} - V**(48 - compSub))
+    res10+= m & (lo{2} - V**(48 - compSub))
+    sC+= 32
+    if (++cycle >= 28) {
+      setlabel{cyc}
+      def m10 = muladdh{muladdh{res10, [32]i8**1}, [16]i16**10}
+      def m1  = muladdh{muladdh{res1,  [32]i8**1}, [16]i16**1}
+      def v = [4]u64~~(m1 + m10)
+      resv+= (v >> 32) + (v & [4]u64**0xffffffff)
+      res1  = V**0
+      res10 = V**0
+      cycle = 0
+    }
+  }
+  if (cycle != 0) goto{cyc}
+  
+  def res = cast_i{u64, vfold{+,resv}} + promote{u64, ((load{r0,0} - (48-compSub))) * 10}
+  free{r0}
+  res
+}
+
+
+
+def chunk{G, a, n} = {
+  def F = functionize{G}
+  res:u64 = 0
+  if (n < 15000) {
+    res = F{a, n}
+  } else {
+    def chunk = 15000
+    def max = chunk*3/2
+    i0:ux = 0
+    i1:ux = 0
+    def {ba, bf} = allocAligned{max + 64, 32}
+    do {
+      i1 = i0 + chunk
+      if (i0 + max >= n) {
+        i1 = n
+      } else {
+        i1 = i0 + chunk
+        while (load{a+i1} != 10) ++i1
+        ++i1
+      }
+      len:= i1-i0
+      
+      if (1) { # copy to temp buffer
+        memcpy{ba, a+i0, len}
+        store{*[32]u8 ~~ (ba+len), 0, [32]u8**0}
+        res+= F{ba, len}
+      } else {
+        res+= F{a+i0, i1-i0}
+      }
+      
+      
+      i0 = i1
+    } while (i1 != n)
+    bf{}
+  }
+  res
+  # t:= n & 7 # tail length
+  # h:= n - t # head length
+  # r1:u64 = G{a, h}
+  # r2:u64 = 0
+  # if (n != h) {
+  #   buf:= undefined{u64, 1}
+  #   store{buf, 0, 0}
+  #   emit{void, 'memcpy', buf, a + h, t}
+  #   r2 = G{*u8~~buf, ux~~8}
+  # }
+  # r1 + r2
+}
+
+
+
+fn part1(a:*u8, n:ux) : u64 = chunk{
+  {a, n} => sumFirstLast{[32]u8, a, n},
+  a, n
+}
+fn part2(a:*u8, n:ux) : u64 = chunk{
+  {a, n} => {
+    def {buf, free} = allocAligned{n+64, 32}
+    mapNamesLoop{[32]u8, buf, a, n}
+    def res = sumFirstLast{[32]u8, buf, n}
+    free{}
+    res
+  },
+  a, n
+}
+export{'part1', part1}
+export{'part2', part2}
