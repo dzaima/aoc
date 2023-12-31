@@ -29,3 +29,6 @@ Tr ⇐ { # depth-transpose
   1≡=⊑𝕩? <˘⍉⁼>𝕩;
   =⊸{<⎉𝕨⍉⍟𝕨>𝕩} 𝕩
 }
+
+base ← •file.At "../"
+Input ⇐ {· 𝕊 ⟨path⟩: path; y‿d 𝕊 ⟨⟩: ∾⟨base, •Repr y, "/inputs/", •Repr d, ".in"⟩}
