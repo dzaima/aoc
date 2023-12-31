@@ -1,5 +1,6 @@
 #!/usr/bin/env bqn
-l ← •file.MapBytes ≠◶"1.in"‿⊑ •args
+⟨Input⟩ ← •Import "../../utils/utils.bqn"
+l ← •file.MapBytes 2023‿1 Input •args
 ! (@+10) = ¯1⊑l
 
 _chunkByTo_ ← { F _𝕣_ char‿tgt raw:
