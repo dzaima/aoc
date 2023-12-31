@@ -28,7 +28,7 @@ FirstLast ← {
   d1 ← (1«¯1↓nls) / ¯1↓𝕩
   +´d1 + 10×d0
 }
-Filter ← ∊⟜((@+10)∾'1'+↕9)⊸/
+Filter ← ≤⟜'9'⊸/
 
 {
   part1+↩ FirstLast Filter 𝕩
@@ -36,10 +36,9 @@ Filter ← ∊⟜((@+10)∾'1'+↕9)⊸/
   shifts ← {𝕏 uv}¨ doShifts
   ands ← {𝕏 shifts}¨ doAnds
   𝕩 ↩ 𝕩 + ⌊´ mults × ands
-  𝕩 ↩ Filter 𝕩
-  part2+↩ FirstLast 𝕩
+  part2+↩ FirstLast Filter 𝕩
   @
-} _chunkByTo_ ⟨@+10, 15000⟩ l
+} {30000≤≠𝕩? 𝔽_chunkByTo_ ⟨@+10, 15000⟩ 𝕩; 𝔽 𝕩} l
 
 •Show part1
 •Show part2
