@@ -2,35 +2,40 @@
 ⟨Input, Count⟩ ← •Import "../../utils/utils.bqn"
 bs ← •file.MapBytes 2024‿1 Input •args
 
-Re ← {a‿b𝕊𝕩: b¨⌾((a=𝕩)⊸/)𝕩}
-nw ← 0.5×1+⊑bs⊐@+10          # half of the width of a line (we assume all numbers are equal-width)
-nums ← 0⌈ '0'-˜ ∘‿nw⥊bs      # (A) reshape into an n×nw matrix, subtract '0', max(0, that)
-cols ← ⌽ ¯1↓<˘⍉ nums         # (B) transpose, split into rows, drop last one (all spaces/newlines), reverse
-a‿b ← <˘⍉ ∘‿2⥊ 10⊸×⊸+˜´ cols # (C) a+10×b-reduce, split apart the two columns
-a ↩ •internal.Squeeze a×÷10  # (D) the first column was shifted one to the right; divide by 10 (multiply by 1÷10) to shift it back (squeeze to convert to ints, as float multiply doesn't bother)
+lw ← 1+⊑bs⊐@+10       # line width; 14 for input
+nw ← ¯2+lw÷2          # number width; 5 for input
+si ← (⊢∾(3+nw)⊸+) ↕nw # indices to pick out from each row; 0‿1‿2‿3‿4‿8‿9‿10‿11‿12 for input
 
+nums ← ∘‿nw⥊ si⊸⊏˘ ∘‿lw⥊ bs    # (A) select by the indices (reshaping to n by lw matrix beforehand, and n×2 by nw afterward)
+digits ← ⌽ <˘ ⍉ nums-'0'       # (B) subtract ASCII '0', transpose, split into list of lists, reverse that
+a‿b ← <˘⍉∘‿2⥊ {𝕨+10×𝕩}´ digits # (C) a+10×b-reduce, split into the two columns via reshape & transpose
+
+# 12345···67890↩54321···98765↩
+# ↓ (A)
 # 12345···67890↩
 # 54321···98765↩
 # ↓ (A)
-# 1234500
-# 0678900
-# 5432100
-# 0987650
+# 1234567890
+# 5432198765
+# ↓ (A)
+# 12345
+# 67890
+# 54321
+# 98765
 # ↓ (B)
-# 0005
-# 5916
-# 3738
-# 4827
-# 2649
-# 1050
+# 1659
+# 2748
+# 3837
+# 4926
+# 5015
 # ↓ (C)
-# ⟨⟨123450,543210⟩, ⟨67890,98765⟩⟩
-# ↓ (D)
+# ⟨12345,67890,54321,98765⟩
+# ↓ (C)
 # ⟨⟨12345,54321⟩, ⟨67890,98765⟩⟩
 
-
-a‿b ∧¨↩             # sort both columns
-•Show +´ |a-b       # sum of absolute differences
-•Show +´ a× a ⊏ /⁼b # indices-inverse (i.e. histogram) column b, select from that by column a, multiply, sum
-# better for larger numbers, but slower for the input:
-# +´ a× a Count b
+a‿b ∧¨↩           # sort both columns
+•Show +´ |a-b     # sum of absolute differences
+h ← (1+⌈´a)↑/⁼b   # indices-inverse (i.e. histogram) column b
+•Show +´ a× a ⊏ h # select from histogram by b, multiply, sum
+# better alternative to last two lines for large numbers, but slower for the ≤99999 inputs:
+# •Show +´ a× a Count b
