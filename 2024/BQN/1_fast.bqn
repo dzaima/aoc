@@ -7,6 +7,7 @@ a‿b ← <˘ ⍉∘‿2⥊ 10⊸×⊸+˜´ ⌽ ¯1↓<˘ ⍉0⌈ '0'-˜ ∘‿n
 
 a ↩ •internal.Squeeze a×÷10
 a‿b ∧¨↩
-
 •Show +´ |a-b
-•Show +´ a× a Count b
+•Show +´ a× a⊏/⁼b
+# better for larger numbers, but slower for the input:
+# +´ a× a Count b
