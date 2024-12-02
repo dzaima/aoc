@@ -1,12 +1,12 @@
 #!/usr/bin/env bqn
 ⟨Input, Count⟩ ← •Import "../../utils/utils.bqn"
-bs ← •file.MapBytes 2024‿1 Input •args
+bytes ← •file.MapBytes 2024‿1 Input •args
 
-lw ← 1+⊑bs⊐@+10       # line width; 14 for input
-nw ← ¯2+lw÷2          # number width; 5 for input
+lw ← 1 + ⊑bytes⊐@+10  # line width; 14 for input
+nw ← ¯2 + lw÷2        # number width; 5 for input
 si ← (⊢∾(3+nw)⊸+) ↕nw # indices to pick out from each row; 0‿1‿2‿3‿4‿8‿9‿10‿11‿12 for input
 
-nums ← ∘‿nw⥊ si⊸⊏˘ ∘‿lw⥊ bs    # (A) select by the indices (reshaping to n by lw matrix beforehand, and n×2 by nw afterward)
+nums ← ∘‿nw⥊ si⊸⊏˘ ∘‿lw⥊ bytes # (A) select by the indices (reshaping to n by lw matrix beforehand, and n×2 by nw afterward)
 digits ← ⌽ <˘ ⍉ nums-'0'       # (B) subtract ASCII '0', transpose, split into list of lists, reverse that
 a‿b ← <˘⍉∘‿2⥊ {𝕨+10×𝕩}´ digits # (C) a+10×b-reduce, split into the two columns via reshape & transpose
 
@@ -35,7 +35,7 @@ a‿b ← <˘⍉∘‿2⥊ {𝕨+10×𝕩}´ digits # (C) a+10×b-reduce, split 
 
 a‿b ∧¨↩           # sort both columns
 •Show +´ |a-b     # sum of absolute differences
-h ← (1+⌈´a)↑/⁼b   # indices-inverse (i.e. histogram) column b
-•Show +´ a× a ⊏ h # select from histogram by b, multiply, sum
+h ← (1+⌈´a)↑/⁼b   # indices-inverse (i.e. histogram) column b, up to max of a
+•Show +´ a× a ⊏ h # select from histogram by a, multiply, sum
 # better alternative to last two lines for large numbers, but slower for the ≤99999 inputs:
 # •Show +´ a× a Count b
