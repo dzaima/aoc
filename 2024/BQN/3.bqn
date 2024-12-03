@@ -18,6 +18,6 @@ r ← n0×n1 # the multiplications
 
 d1 ← / "do()"    ⍷ l     # indices of dos
 d0 ← / "don't()" ⍷ l     # indices of don'ts
-P ← {(¯1+𝕨⍋𝕩) ⊏ 𝕨∾0}     # find the index of nearest smaller value in 𝕨 for each in 𝕩 via binary search (0 if not yet encountered)
+P ← {(𝕨⍋𝕩) ⊏ ¯1∾𝕨}       # find the index of nearest smaller value in 𝕨 for each in 𝕩 via binary search (¯1 if not yet encountered)
 do ← (d1 P mi) ≥ d0 P mi # whether a do is nearer than a don't (≥ to make initial state true)
 •Show +´ do / r          # filter by that
