@@ -21,5 +21,5 @@ d0 ← / "don't()" ⍷ l # indices of don'ts
 da ← d1∾d0    # all relevant indices
 dg ← ⍋da      # grade: indices to sort da by
 do ← dg < ≠d1 # mask of dos
-prev ← ¯1 + (dg⊏da)⍋mi    # for each number, get nearest index in sorted da
-•Show +´(prev ⊏ do∾1) / r # filter by whether that index is of a do(); the start gets index ¯1, which wraps around to the end and hits the ∾1
+prev ← (dg⊏da) ⍋ mi       # for each number, get index of nearest greater value in sorted da
+•Show +´(prev ⊏ 1∾do) / r # filter by whether that index is of a do(); prepending a 1 to make the indices look for the preceding value, initially 1
