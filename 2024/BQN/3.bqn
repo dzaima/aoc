@@ -16,10 +16,8 @@ n1 ← •ParseFloat¨ (1+mi)↓¨ ei↑¨<l # parse the numbers between 1+mi an
 r ← n0×n1 # the multiplications
 •Show +´ r
 
-d1 ← / "do()"    ⍷ l # indices of dos
-d0 ← / "don't()" ⍷ l # indices of don'ts
-da ← d1∾d0    # all relevant indices
-dg ← ⍋da      # grade: indices to sort da by
-do ← dg < ≠d1 # mask of dos
-prev ← (dg⊏da) ⍋ mi       # for each number, get index of nearest greater value in sorted da
-•Show +´(prev ⊏ 1∾do) / r # filter by whether that index is of a do(); prepending a 1 to make the indices look for the preceding value, initially 1
+d1 ← / "do()"    ⍷ l     # indices of dos
+d0 ← / "don't()" ⍷ l     # indices of don'ts
+P ← {(¯1+𝕨⍋𝕩) ⊏ 𝕨∾0}     # find the index of nearest smaller value in 𝕨 for each in 𝕩 via binary search (0 if not yet encountered)
+do ← (d1 P mi) ≥ d0 P mi # whether a do is nearer than a don't (≥ to make initial state true)
+•Show +´ do / r          # filter by that
