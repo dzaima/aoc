@@ -35,7 +35,7 @@ a‿b ← <˘⍉∘‿2⥊ {𝕨+10×𝕩}´ digits # (C) a+10×b-reduce, split 
 
 a‿b ∧¨↩           # sort both columns
 •Show +´ |a-b     # sum of absolute differences
-h ← (1+⌈´a)↑/⁼b   # indices-inverse (i.e. histogram) column b, up to max of a
+h ← (1+⌈´a) ↑ /⁼b # indices-inverse (i.e. histogram) column b, up to max of a
 •Show +´ a× a ⊏ h # select from histogram by a, multiply, sum
 # better alternative to last two lines for large numbers, but slower for the ≤99999 inputs:
 # •Show +´ a× a Count b
