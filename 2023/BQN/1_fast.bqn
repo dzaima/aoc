@@ -1,6 +1,8 @@
 #!/usr/bin/env bqn
 ⟨Input⟩ ← •Import "../../utils/utils.bqn"
 l ← •file.MapBytes 2023‿1 Input •args
+# l ← •file.MapBytes "../inputs/gen/1_10MB.in"
+{l ↩ •file.MapBytes ⊑𝕩}⍟≠ •args
 ! (@+10) = ¯1⊑l
 
 _chunkByTo_ ← { F _𝕣_ char‿tgt raw:
@@ -9,35 +11,40 @@ _chunkByTo_ ← { F _𝕣_ char‿tgt raw:
   }¨ tgt×↕⌈(≠𝕩)÷tgt
 }
 
-names ← "one"‿"two"‿"three"‿"four"‿"five"‿"six"‿"seven"‿"eight"‿"nine"
-unq ← ⍷∾names
+names ← "one"‿"two"‿"three"‿"four"‿"five"‿"six"‿"seven"‿"eight"‿"nine"-@
 
-unqNth ← ' '⊸≠⊸/¨ ⍷¨ <˘⍉>5↑¨names
-reqShifts ← ∾⋈¨¨⟜↕⟜≠ unqNth
-doShifts ← {𝕩=0? (⊑unq⊐𝕨)⊑⊢; (𝕩⥊0)«(⊑unq⊐𝕨)⊑⊢}´¨ reqShifts
-doAnds ← {∧´(reqShifts⊐⋈¨⟜↕⟜≠ 𝕩)⊏⊢}¨ names
+kmap ← ∾1↑¨⊔16| +´¨ 2↑¨ 1↓¨ names
+c0‿c1‿c2‿c3‿c4 ← <˘⍉>5↑¨ ⊑⟜names¨ kmap
+mults ← kmap ⊏ (49+↕9) - ⊑¨names
 
-mults ← ('1'+↕9) - ⊑¨names
 
 part1 ← 0
 part2 ← 0
 
 FirstLast ← {
-  nls ← 𝕩=@+10
-  𝕩-↩ '0'
+  𝕩 ≤⟜('9'-@)⊸/↩
+  nls ← 𝕩=10
   d0 ← (1»nls) / 𝕩
   d1 ← (1«¯1↓nls) / ¯1↓𝕩
-  +´d1 + 10×d0
+  ((+´d1) + 10 × +´d0) - 528×≠d0
 }
-Filter ← ≤⟜'9'⊸/
+
 
 {
-  part1+↩ FirstLast Filter 𝕩
-  uv ← 𝕩⊸=¨ unq
-  shifts ← {𝕏 uv}¨ doShifts
-  ands ← {𝕏 shifts}¨ doAnds
-  𝕩 ↩ 𝕩 + ⌊´ mults × ands
-  part2+↩ FirstLast Filter 𝕩
+  𝕩 8‿8•bit._cast↩
+  part1+↩ FirstLast 𝕩
+  
+  sh1 ← 0«𝕩
+  sh2 ← 0‿0«𝕩
+  key ← 16|sh1+sh2
+  m ←             (key⊏c0) = 𝕩
+  m∧↩             (key⊏c1) = sh1
+  m∧↩             (key⊏c2) = sh2
+  m∧↩ (t3=0) ∨ (t3←key⊏c3) = 0‿0‿0«𝕩
+  m∧↩ (t4=0) ∨ (t4←key⊏c4) = 0‿0‿0‿0«𝕩
+  𝕩+↩ (key⊏mults) × m
+  
+  part2+↩ FirstLast 𝕩
   @
 } {30000≤≠𝕩? 𝔽_chunkByTo_ ⟨@+10, 15000⟩ 𝕩; 𝔽 𝕩} l
 
