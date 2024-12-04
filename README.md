@@ -1,0 +1,1 @@
+LICENSE applies to all files, other than inputs on years ≤2023.

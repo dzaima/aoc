@@ -1,7 +1,7 @@
 #!/usr/bin/env bqn
 year ← •args
 utils ← •Import "utils.bqn"
-AtYear ← year.path •file.At ⊢
+atYear ← {⟨AtYear⟩: AtYear; year.path •file.At ⊢} year
 expMap ← (•HashMap˜⟨⟩) {𝕩.Set´𝕨}´ year.exp
 exitCode ← 0
 
