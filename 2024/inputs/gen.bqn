@@ -56,6 +56,42 @@ _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit number
   m
 } _gen 4
 
+{ 𝕊r:
+  nodes ← ⌈⌾(÷⟜4) 24⌈ ScaleF 100
+  tests ← ScaleD ⌊nodes×1.85
+  
+  q ← nodes÷4
+  conn ← nodes‿nodes⥊0
+  
+  qs ← ⟨
+    ⟨nodes-q-2, nodes-q-1⟩⊸+¨ ↕q-2
+    ⟨nodes-q+1, nodes-q⟩⊸+¨ - ↕q-1
+    ⌽⟨nodes-q, nodes-q-1⟩⊸+¨ -⊸⋈¨ ↕q-1
+    ⌽⟨nodes-q-1, nodes-q+1⟩⊸+¨ ⋈⟜-¨ ↕q-1
+  ⟩
+  {
+    y‿x ← <˘⍉>𝕩
+    conn 1¨⌾((∾ y ⋈¨¨ 1↓↑x)⊸⊑)↩
+    1
+  }¨ qs
+  
+  t ← { 𝕊:
+    qc ← (2+r.Range 2) ⊑ qs # I have no clue what happens with the other two quadrants
+    k ← 1+2× 2+ r.Range ¯2+⌊q÷2
+    is ← k r.Subset ≠qc
+    r.Deal∘≠⊸⊏⍟(r.Range 2) ⊑¨is⊏qc
+  }¨ ↕tests
+  
+  d ← MDSlash conn
+  
+  nl←⌊nodes÷10
+  shuf ← (↕nl) ∾ nl+r.Deal nodes-nl
+  d‿t ⊏⟜shuf¨¨↩
+  d‿t r.Deal∘≠⊸⊏¨↩
+  
+  ({'|'Join Repr¨𝕩}¨ d)∾⟨⟨⟩⟩∾ (','Join Repr¨)¨ t
+} _gen 5
+
 # { 𝕊r:
 # } _gen
 
@@ -66,7 +102,7 @@ ScaleF ← !
   Arg ← {𝕊: (args↓˜↩1) ⊢ (1⌊≠)⊸↑args}
   path ← ⋈⁼ Arg@
   day ← •ParseFloat (∧`('0'⊸≤∧≤⟜'9'))⊸/ •file.Name path
-  seed ← ≠◶⟨1, •ParseFloat⊑⟩ Arg@
+  seed ← ≠◶⟨1, ("u"⊸≡◶⟨•ParseFloat, {𝕊: •rand.Range 1e9}⟩)⊑⟩ Arg@
   ScaleD ↩ Arg⊸{⟨⟩𝕊𝕩: 𝕩; ⟨a⟩𝕊𝕩: •ParseFloat a}
   ScaleF ↩ Arg⊸{⟨⟩𝕊𝕩: 𝕩; ⟨a⟩𝕊𝕩: m←'x'=¯1⊑a ⋄ 𝕩⊸×⍟m •ParseFloat m-⊸↓a}
 
