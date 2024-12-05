@@ -1,4 +1,4 @@
-# ⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, Tr, Input⟩ ← •Import "../../utils/utils.bqn"
+# ⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, Tr, TW, Input⟩ ← •Import "../../utils/utils.bqn"
 RB ⇐ 2⊸×⊸+˜´⌽
 B10 ⇐ 10⊸×⊸+˜´⌽
 Num ⇐ •ParseFloat
@@ -29,7 +29,10 @@ Tr ⇐ { # depth-transpose
   1≡=⊑𝕩? <˘⍉⁼>𝕩;
   =⊸{<⎉𝕨⍉⍟𝕨>𝕩} 𝕩
 }
-TW ⇐ {<⎉(≠𝕨) ((≢𝕩)-𝕨-1) ↕ 𝕩} # transposed depth-separated list↕arr
+TW ⇐ { # transposed depth-separated 𝕨↕arr
+  1=≠𝕨? (𝕨¬˜≠𝕩)↑¨↓⟜𝕩¨↕𝕨;
+  <⎉(≠𝕨) ((≢𝕩)-𝕨-1) ↕ 𝕩
+}
 
 base ← •file.At "../"
 Input ⇐ {· 𝕊 ⟨path⟩: path; y‿d 𝕊 ⟨⟩: ∾⟨base, •Repr y, "/inputs/", •Repr d, ".txt"⟩}
