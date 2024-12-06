@@ -31,7 +31,7 @@ G ← { 𝕊 w:
   
   st‿m
 }
-! 0=⊑G w
+# ! 0=⊑G w
 m0 ← 1⊑ G w
 •Show +´⥊ m0
 •Show +´ {⊑G 1⌾(𝕩⊸⊑) w}¨ MDSlash m0
