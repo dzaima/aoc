@@ -89,22 +89,76 @@ _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit number
   d‿t ⊏⟜shuf¨¨↩
   d‿t r.Deal∘≠⊸⊏¨↩
   
-  ({'|'Join Repr¨𝕩}¨ d)∾⟨⟨⟩⟩∾ (','Join Repr¨)¨ t
+  ({'|'Join Repr¨𝕩}¨ d) ∾⟨⟨⟩⟩∾ (','Join Repr¨)¨ t
 } _gen 5
+
+{ 𝕊r:
+  ds ← (⌽-⌾⊑)⍟(↕4) ¯1‿0
+  
+  w ← ScaleF 130
+  cn ← ×˜w
+  wa ← ⌈ 0.05 × cn # target wall amount
+  p ← 1+2 r.Range w-2
+  m ← w‿w⥊0 # 0:air/any/todo 1:wall 2:start 4:reqair
+  m 2⌾(p⊸⊑)↩
+  tgtSteps ← ⌈1.2×w
+  remaining ← tgtSteps
+  tryLeft ← remaining×100
+  dir ← 0
+  { 𝕊:
+    d ← dir⊑ds
+    l ← 2+r.Range ⌈w÷2
+    pe ← p + d×l
+    pw ← pe+d
+    ∧´pw≥0? ∧´pw<w?
+    0=pe⊑m?
+    1≥pw⊑m?
+    path ← (p + d×⊢)¨ ↕l+1
+    ∧´1≠path⊑m?
+    {0:1;
+      path2 ← (∧´≥⟜0∧<⟜w)¨⊸/ (pe + ((4|dir+1)⊑ds)×⊢)¨ ↕w
+      ok ← ∧´ (path2⊑m)∊ 0‿2‿4
+      {𝕊: 1⊣m 4¨⌾(path2⊸⊑)↩} ⍟⊢ ok
+      ok
+    } remaining=1?
+    m (4×0=⊢)⊸+⌾(path⊸⊑)↩
+    m 1⌾(pw⊸⊑) ↩
+    p ↩ pe
+    dir ↩ 4|dir+1
+    remaining-↩1
+  ;
+    0
+  }•_while_{𝕊: (0≤tryLeft-↩1) ∧ remaining≠0} @
+  
+  # •Show tgtSteps‿remaining‿tryLeft
+  remaining = 0?
+  # m 3⌾(p⊸⊑)↩
+  # •Show m⊏"·#^⎕•"
+  m ↩ {(≠𝕩)↑/⁼ ((⌊0.5×≠𝕩) ⌊ 0⌈ wa - +´1=⥊m)r.Deal ≠𝕩}⌾((0=m)/○⥊⊢) m
+  # •Show md⊏"∧>∨<·"
+  ".#^"⊏˜4|m
+  ; retry
+} _gen 6
 
 # { 𝕊r:
 # } _gen
 
 ScaleD ← !
 ScaleF ← !
+retry ← {⇐}
 {
   args ← •args
   Arg ← {𝕊: (args↓˜↩1) ⊢ (1⌊≠)⊸↑args}
   path ← ⋈⁼ Arg@
   day ← •ParseFloat (∧`('0'⊸≤∧≤⟜'9'))⊸/ •file.Name path
-  seed ← ≠◶⟨1, ("u"⊸≡◶⟨•ParseFloat, {𝕊: •rand.Range 1e9}⟩)⊑⟩ Arg@
+  seed ← ≠◶⟨1, ("u"⊸≡◶⟨•ParseFloat, {𝕊: s←•rand.Range 1e9 ⋄ •Out "Seed: "∾•Repr s ⋄ s}⟩)⊑⟩ Arg@
   ScaleD ↩ Arg⊸{⟨⟩𝕊𝕩: 𝕩; ⟨a⟩𝕊𝕩: •ParseFloat a}
   ScaleF ↩ Arg⊸{⟨⟩𝕊𝕩: 𝕩; ⟨a⟩𝕊𝕩: m←'x'=¯1⊑a ⋄ 𝕩⊸×⍟m •ParseFloat m-⊸↓a}
 
-  path (0=•Type∘⊑)∘⊢◶•FChars‿•FLines <˘⍟(2==) {𝕏 MakeRand seed} days.Get day
+  f ← days.Get day
+  rng ← MakeRand seed
+  rn ← 0
+  res ← {𝕊: rn+↩1 ⋄ F rng}•_while_{𝕊: 𝕩≡retry} retry
+  {•Out ∾⟨path, ": ", •Repr 𝕩, " retries"⟩}⍟(1⊸≠) rn
+  path (0=•Type∘⊑)∘⊢◶•FChars‿•FLines <˘⍟(2==) res
 }
