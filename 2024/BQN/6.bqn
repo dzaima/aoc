@@ -9,7 +9,7 @@ p0 ← 0 ⋈ ⋈⁼MDSlash l='^'
 ds ← (⌽-⌾⊑)⍟(↕4) ¯1‿0
 
 v←•HashMap˜⟨⟩
-G ← { 𝕊 w:
+G ← { part1 𝕊 w:
   v.Delete¨ v.Keys@
   wr ← <˘∘⍉¨ ⍉∘⌽⍟(↕4) ⌽w
   m ← 0¨ l
@@ -20,12 +20,11 @@ G ← { 𝕊 w:
       y2‿x2 ← ((n-1)⊸-⌾⊑⌽)⍟d p
       forward ← (-y2)↑x2⊑d⊑wr
       steps ← ⊑forward⊐1
-      
-      ps ← p + (d⊑ds) ×⌜ ↕steps+1
-      m 1¨ _underSelect_ ps ↩
+      dc ← d⊑ds
+      {𝕊: m 1¨ _underSelect_ (p + dc ×⌜ ↕steps+1) ↩}⍟⊢ part1
       
       steps ≠ ≠forward?
-      ⟨4|1+d, ¯1⊏˘ps⟩
+      ⟨4|1+d, p + steps×dc⟩
     ;
       0
   }
@@ -34,6 +33,6 @@ G ← { 𝕊 w:
   st‿m
 }
 # ! 0=⊑G w
-m0 ← 1⊑ G w
+m0 ← 1⊑ 1 G w
 •Show +´⥊ m0
-•Show +´ {⊑G 1⌾(𝕩⊸⊑) w}¨ MDSlash m0
+•Show +´ {⊑0 G 1⌾(𝕩⊸⊑) w}¨ MDSlash m0
