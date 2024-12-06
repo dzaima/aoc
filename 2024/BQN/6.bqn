@@ -1,5 +1,5 @@
 #!/usr/bin/env bqn
-⟨MDSlash, Input⟩ ← •Import "../../utils/utils.bqn"
+⟨MDSlash, _underSelect_, Input⟩ ← •Import "../../utils/utils.bqn"
 l ← >•FLines 2024‿6 Input •args
 
 w ← l='#'
@@ -20,10 +20,12 @@ G ← { 𝕊 w:
       y2‿x2 ← ((n-1)⊸-⌾⊑⌽)⍟d p
       forward ← (-y2)↑x2⊑d⊑wr
       steps ← ⊑forward⊐1
-      ps ← p +⎉1 (↕steps+1) ×⌜ d⊑ds
-      m 1¨⌾((<˘ps)⊸⊑) ↩
+      
+      ps ← p + (d⊑ds) ×⌜ ↕steps+1
+      m 1¨ _underSelect_ ps ↩
+      
       steps ≠ ≠forward?
-      ⟨4|1+d, ¯1⊏ps⟩
+      ⟨4|1+d, ¯1⊏˘ps⟩
     ;
       0
   }
@@ -35,5 +37,3 @@ G ← { 𝕊 w:
 m0 ← 1⊑ G w
 •Show +´⥊ m0
 •Show +´ {⊑G 1⌾(𝕩⊸⊑) w}¨ MDSlash m0
-4890
-1995
