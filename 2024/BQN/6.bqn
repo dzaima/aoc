@@ -2,22 +2,24 @@
 ⟨MDSlash, _underSelect_, Input⟩ ← •Import "../../utils/utils.bqn"
 l ← >•FLines 2024‿6 Input •args
 
-w ← l='#'
 n ← ≠l
+w ← l='#'
 p0 ← 0 ⋈ ⋈⁼MDSlash l='^'
+
+nd ← n-1
+RotPos ← ⊣◶⟨⊢, (⊣⋈˜nd-⊢)´⊢, nd⊸-, (⊢⋈nd-⊣)´⊢⟩
 
 ds ← (⌽-⌾⊑)⍟(↕4) ¯1‿0
 
-v←•HashMap˜⟨⟩
-G ← { part1 𝕊 w:
-  v.Delete¨ v.Keys@
-  wr ← <˘∘⍉¨ ⍉∘⌽⍟(↕4) ⌽w
-  m ← 0¨ l
+mz ← 0¨ l
+v ← •HashMap˜⟨⟩
+G ← { part1 𝕊 wr:
+  m ← mz
   S ← {
     0 v.Get 𝕩? 1;
     d‿p:
       𝕩 v.Set 1
-      y2‿x2 ← ((n-1)⊸-⌾⊑⌽)⍟d p
+      y2‿x2 ← d RotPos p
       forward ← (-y2)↑x2⊑d⊑wr
       steps ← ⊑forward⊐1
       dc ← d⊑ds
@@ -29,10 +31,14 @@ G ← { part1 𝕊 w:
       0
   }
   st ← S•_while_(1==) p0
-  
+  v.Delete¨ v.Keys@
   st‿m
 }
 # ! 0=⊑G w
-m0 ← 1⊑ 1 G w
+
+wr ← <˘¨ ¯1⌽ ⌽∘⍉⍟(↕4) w
+m0 ← 1⊑ 1 G wr
 •Show +´⥊ m0
-•Show +´ {⊑0 G 1⌾(𝕩⊸⊑) w}¨ MDSlash m0
+•Show +´ {
+  ⊑ 0 G (RotPos⟜𝕩¨ ¯1⌽↕4) {x‿y𝕊𝕩: 1⌾(y⊑x⊑⊢)𝕩}¨ wr
+}¨ MDSlash m0

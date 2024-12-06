@@ -12,6 +12,6 @@
   path ⇐ •path
   args ⇐ •args
   all ⇐ ⟨"1", "2", "3", "4", "5", "6"⟩
-  most ⇐ "6"⊸≢¨⊸/ all
+  most ⇐ all
   orig ⇐ ∾⟜"_orig"¨ all
 } •Import "../../utils/test.bqn"
