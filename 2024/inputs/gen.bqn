@@ -103,11 +103,11 @@ _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit number
   m 2⌾(p⊸⊑)↩
   tgtSteps ← ⌈1.2×w
   remaining ← tgtSteps
-  tryLeft ← remaining×100
+  tryLeft ← remaining×20
   dir ← 0
   { 𝕊:
     d ← dir⊑ds
-    l ← 2+r.Range ⌈w÷2
+    l ← 2+r.Range w
     pe ← p + d×l
     pw ← pe+d
     ∧´pw≥0? ∧´pw<w?
