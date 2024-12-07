@@ -1,6 +1,6 @@
 #!/usr/bin/env bqn
-⟨Split⟩ ← •Import "../../utils/utils.bqn"
-l ← ','Split•FChars ≠◶"15.in"‿⊑ •args
+⟨Split,Input⟩ ← •Import "../../utils/utils.bqn"
+l ← ','Split•FChars 2023‿15 Input •args
 
 H←{0{256|17×𝕩+𝕨}´⌽𝕩-@}
 •Show +´{0{256|17×𝕩+𝕨}´⌽𝕩-@}¨ l

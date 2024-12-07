@@ -1,7 +1,7 @@
 #!/usr/bin/env bqn
 # does only part 1; part 2 is in a separate file as it needs bqn-smt
-⟨SInts, Tr⟩ ← •Import "../../utils/utils.bqn"
-l ← (2‿3⥊SInts)¨ •FLines ≠◶"24.in"‿⊑ •args
+⟨SInts, Tr, Input⟩ ← •Import "../../utils/utils.bqn"
+l ← (2‿3⥊SInts)¨ •FLines 2023‿24 Input •args
 
 [x1‿y1‿z1 ⋄ vx1‿vy1‿vz1] ← Tr l
 

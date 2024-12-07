@@ -1,6 +1,6 @@
 #!/usr/bin/env bqn
-⟨MDSlashI⟩ ← •Import "../../utils/utils.bqn"
-l ← '#'=>•FLines ≠◶"11.in"‿⊑ •args
+⟨MDSlashI, Input⟩ ← •Import "../../utils/utils.bqn"
+l ← '#'=>•FLines 2023‿11 Input •args
 
 Dist ← {+´∾ +´| (¯1↓↑)¨⊸- MDSlashI 𝕩}
 

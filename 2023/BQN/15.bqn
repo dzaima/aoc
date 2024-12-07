@@ -1,5 +1,6 @@
 #!/usr/bin/env bqn
-c ← •FChars ≠◶"15.in"‿⊑ •args
+⟨Input⟩ ← •Import "../../utils/utils.bqn"
+c ← •FChars 2023‿15 Input •args
 
 cc ← ',' = c       # commas
 cs ← cc ∨ (∊⟜"=-" ∨ '0'⊸≤ ∧ ≤⟜'9') c # non-key character

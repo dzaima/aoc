@@ -1,6 +1,6 @@
 #!/usr/bin/env bqn
-⟨_fx_, Tr⟩ ← •Import "../../utils/utils.bqn"
-l ← >•FLines ≠◶"16.in"‿⊑ •args
+⟨_fx_, Tr,Input⟩ ← •Import "../../utils/utils.bqn"
+l ← >•FLines 2023‿16 Input •args
 # direction lists: up, right, down, left
 
 rots ← ⟨⊢, ⌽⍉, ⌽⌽˘, ⍉⌽⟩

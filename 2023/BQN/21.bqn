@@ -1,5 +1,6 @@
 #!/usr/bin/env bqn
-l ← >•FLines ≠◶"21.in"‿⊑ •args
+⟨Input⟩ ← •Import "../../utils/utils.bqn"
+l ← >•FLines 2023‿21 Input •args
 
 nw ← l≠'#' # not wall
 ls ← l='S' # start

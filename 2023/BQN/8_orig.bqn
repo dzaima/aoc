@@ -1,6 +1,6 @@
 #!/usr/bin/env bqn
-⟨RB, B10, Num, Ints, Split, SplitF, ReIndex, MDSlash, Unjoin, Count, GCD, LCM, _fx_, _fi_, ⟩ ← •Import "../../utils/utils.bqn"
-l ← •FLines ≠◶"8.in"‿⊑ •args
+⟨RB, B10, Num, Ints, Split, SplitF, ReIndex, MDSlash, Unjoin, Count, GCD, LCM, _fx_, _fi_, Input⟩ ← •Import "../../utils/utils.bqn"
+l ← •FLines 2023‿8 Input •args
 s ← 'L'=⊑l
 
 k‿lv‿rv ← <˘⍉> {⟨3↑𝕩, 3↑7↓𝕩, 3↑12↓𝕩⟩}¨ 2↓l

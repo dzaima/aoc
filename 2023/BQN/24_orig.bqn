@@ -1,7 +1,7 @@
 #!/usr/bin/env bqn
-⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, Tr⟩ ← •Import "../../utils/utils.bqn"
-l ← {<˘2‿3⥊SInts 𝕩}¨ •FLines ≠◶"24.in"‿⊑ •args
-# l ↩ {{•ParseFloat¨ ','Split𝕩}¨ '@'Split ' '⊸≠⊸/ 𝕩}¨ •FLines ≠◶"24.in"‿⊑ •args
+⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, Tr, Input⟩ ← •Import "../../utils/utils.bqn"
+l ← {<˘2‿3⥊SInts 𝕩}¨ •FLines 2023‿24 Input •args
+# l ↩ {{•ParseFloat¨ ','Split𝕩}¨ '@'Split ' '⊸≠⊸/ 𝕩}¨ •FLines 2023‿24 Input •args
 x‿y‿z‿vx‿vy‿vz ← Tr ∾¨l
 x2‿y2‿z2 ← x‿y‿z + vx‿vy‿vz
 b0‿b1 ← 200000000000000‿400000000000000

@@ -1,6 +1,6 @@
 #!/usr/bin/env bqn
-⟨_fx_, MDSlash⟩ ← •Import "../../utils/utils.bqn"
-m ← >•FLines ≠◶"10.in"‿⊑ •args
+⟨_fx_, MDSlash, Input⟩ ← •Import "../../utils/utils.bqn"
+m ← >•FLines 2023‿10 Input •args
 
 l ← m∊"-J7S"
 r ← m∊"-FLS"

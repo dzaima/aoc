@@ -1,6 +1,6 @@
 #!/usr/bin/env bqn
-⟨Split,_fx_⟩ ← •Import "../../utils/utils.bqn"
-l ← 0‿1⊸+¨ •ParseFloat¨¨¨ ','Split¨¨'~'Split¨ •FLines ≠◶"22.in"‿⊑ •args
+⟨Split,_fx_,Input⟩ ← •Import "../../utils/utils.bqn"
+l ← 0‿1⊸+¨ •ParseFloat¨¨¨ ','Split¨¨'~'Split¨ •FLines 2023‿22 Input •args
 
 {𝕩!∧´<´𝕩}¨ l
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env bqn
-l ← '0'-˜>•FLines ≠◶"17.in"‿⊑ •args
+⟨Input⟩ ← •Import "../../utils/utils.bqn"
+l ← '0'-˜>•FLines 2023‿17 Input •args
 n ← ≠l
 
 { 𝕊 jmin‿jmax:

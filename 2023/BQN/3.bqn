@@ -1,6 +1,6 @@
 #!/usr/bin/env bqn
-⟨MDSlash⟩ ← •Import "../../utils/utils.bqn"
-l ← '.'∾˜˘>•FLines ≠◶"3.in"‿⊑ •args # adds a column of '.' so that there's always a '.' between adjacent numbers in deshape
+⟨MDSlash, Input⟩ ← •Import "../../utils/utils.bqn"
+l ← '.'∾˜˘>•FLines 2023‿3 Input •args # adds a column of '.' so that there's always a '.' between adjacent numbers in deshape
 ld ← (≥⟜'0'∧≤⟜'9') l
 ni ← ¯1+(+`1∾1‿0⍷⊢)⌾⥊⊸× ld
 pn ← •ParseFloat¨ ni⊔l
