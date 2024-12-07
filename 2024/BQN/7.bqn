@@ -2,16 +2,19 @@
 ⟨Ints, Input⟩ ← •Import "../../utils/utils.bqn"
 l ← Ints¨ •FLines 2024‿7 Input •args
 
-Part ← { 𝕊 ops:
-  {
-    exp   ← 0⊑𝕩
-    start ← 1⊑𝕩
-    tail  ← 2↓𝕩
-    exp × ∨´ exp = ⟨start⟩ { val𝕊acc:
-      ≤⟜exp⊸/ ∾ {acc 𝕏 val}¨ ops # assumes no zeroes in input
-    }´ ⌽tail
-  }¨ l
-}
+Part ← { part 𝕊 𝕩:
+  exp   ← 0⊑𝕩
+  start ← 1⊑𝕩
+  tail  ← 2↓𝕩
+  exp × ∨´start = ⟨exp⟩ { val𝕊acc:
+    sub ← acc - val
+    r ← sub ∾ ⌊⊸=⊸/ acc÷val
+    {𝕊:
+      r∾↩ ⌊⊸=⊸/ sub ÷ 10⋆≠•Repr val
+    }⍟⊢ part=2
+    r
+  }´ tail
+}¨⟜l
 
-•Show +´ Part +‿×
-•Show +´ Part +‿×‿{(𝕨 × 10⋆≠•Repr𝕩) + 𝕩}
+•Show +´ Part 1
+•Show +´ Part 2
