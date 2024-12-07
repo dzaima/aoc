@@ -140,6 +140,36 @@ _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit number
   ; retry
 } _gen 6
 
+{ 𝕊r:
+  n ← ScaleF 850
+  distr ← +`(⊢÷+´) 0‿0‿5‿5‿50‿25‿25‿20‿20‿20‿10‿10
+  
+  sum ← 0
+  _gen ← {
+    _try_ ← { 𝔽_𝕣_𝕘 @:
+      ops ← (𝕘 r.Range ≠𝕗) ⊏ 𝕗
+      args ← 1+𝕘 r.Range 99
+      start ← 1+r.Range 999
+      exp ← start {op‿arg𝕊𝕩: 𝕩 Op arg}´ ⌽ops⋈¨args
+      exp<1e14?
+      sum+↩ exp
+      exp∾start∾args
+      ;@
+    }
+    𝕗 _try_ 𝕩 •_while_ (@⊸≡) @
+  }
+  
+  ts ← {𝕊: 0⌈¯1+r.Range 4}◶⟨
+    {(1+r.Range 2⋆30+r.Range 20) ∾ 1+ r.Range¨ ¯1+ (1+𝕩)⥊10⋆1+r.Range 3}
+    +‿× _gen
+    +‿×‿{(𝕨 × 10⋆≠•Repr𝕩) + 𝕩} _gen
+  ⟩¨ distr ⍋ n r.Range 0
+  
+  sum<1e15?
+  {∾⟨Repr⊑𝕩, ": ", ' 'Join Repr¨ 1↓𝕩⟩}¨ ts
+  ; retry
+} _gen 7
+
 # { 𝕊r:
 # } _gen
 
@@ -158,7 +188,7 @@ retry ← {⇐}
   f ← days.Get day
   rng ← MakeRand seed
   rn ← 0
-  res ← {𝕊: rn+↩1 ⋄ F rng}•_while_{𝕊: 𝕩≡retry} retry
+  res ← {𝕊: rn+↩1 ⋄ F rng}•_while_ (retry⊸≡) retry
   {•Out ∾⟨path, ": ", •Repr 𝕩, " retries"⟩}⍟(1⊸≠) rn
   path (0=•Type∘⊑)∘⊢◶•FChars‿•FLines <˘⍟(2==) res
 }
