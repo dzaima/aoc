@@ -12,6 +12,8 @@ x0‿y0‿x1‿y1 ← ∾¨ <˘⍉> {
 
 ps ← ⟨x0≍˘y0, (x0-x1) ≍˘ y0-y1⟩
 
+# ! 1 = ⌈´ (x0-x1) •math.GCD○| y0-y1
+
 InBounds ← ∧˝˘ ≥⟜0 ∧ <⟜n
 
 •Show ≠⍷ InBounds⊸/ +´ps
