@@ -170,6 +170,16 @@ _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit number
   ; retry
 } _gen 7
 
+{ 𝕊r:
+  n ← ScaleF 50
+  res ← n‿n⥊'.'
+  '.'≡⊑res?
+  chars ← (((⌈n×1.04)⌊≠) r.Deal ≠)⊸⊏ ∾"0Aa"+⟜↕¨10‿26‿26
+  (4/chars) {res 𝕨¨⌾(𝕩⊏⥊)↩⋄1}¨ (4×≠chars) r.Deal n×n
+  res
+  ; retry
+} _gen 8
+
 # { 𝕊r:
 # } _gen
 
