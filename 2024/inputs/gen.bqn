@@ -189,6 +189,19 @@ _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit number
   ; retry
 } _gen 8
 
+{ 𝕊r:
+  n ← ScaleF 10000
+  l←¯1↓⥊(1+n r.Range 9) ≍˘ n r.Range 10
+  
+  fs ← l / (≠l)↑ ⥊ (↕n+1)≍˘¯1
+  gs ← 2↑((+`⌾⌽∘¬ > +`) fs=¯1) ⊔ fs
+  ∧´×≠¨gs?
+  ∧´¯1≠ {(⊑𝕨)⋈¯1⊑𝕩}´gs? # no clue if this is a property the official inputs guarantee, but it was true on my input, and my solution breaks without it
+  
+  ⋈'0'+l
+  ; retry
+} _gen 9
+
 # { 𝕊r:
 # } _gen
 
@@ -207,7 +220,8 @@ retry ← {⇐}
   f ← days.Get day
   rng ← MakeRand seed
   rn ← 0
-  res ← {𝕊: rn+↩1 ⋄ F rng}•_while_ (retry⊸≡) retry
+  args0 ← args
+  res ← {𝕊: args↩args0 ⋄ rn+↩1 ⋄ F rng}•_while_ (retry⊸≡) retry
   {•Out ∾⟨path, ": ", •Repr 𝕩, " retries"⟩}⍟(1⊸≠) rn
   path (0=•Type∘⊑)∘⊢◶•FChars‿•FLines <˘⍟(2==) res
 }
