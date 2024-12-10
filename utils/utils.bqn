@@ -1,4 +1,4 @@
-# ⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, _underSelect_, Tr, TW, Input⟩ ← •Import "../../utils/utils.bqn"
+# ⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, Indices, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, _underSelect_, Tr, TW, Input⟩ ← •Import "../../utils/utils.bqn"
 RB ⇐ 2⊸×⊸+˜´⌽
 B10 ⇐ 10⊸×⊸+˜´⌽
 Num ⇐ •ParseFloat
@@ -13,6 +13,7 @@ SInts ⇐ {•ParseFloat¨((¯1+⊢×·+`»⊸<)𝕩∊'-'∾'0'+↕10)⊔𝕩}
 Split ⇐ {((¯1+⊢×·+`»⊸<)¬𝕩=𝕨)⊔𝕩}
 SplitF ⇐ {((¯1+⊢×·+`»⊸<)¬𝕨⊸≡¨𝕩)⊔𝕩}
 
+Indices ⇐ <⥊¨·⊣⌜˜`⌾⌽↕¨ # <˘⍉⁼>↕𝕩
 ReIndex ⇐ {<˘𝕨|⎉1⌊𝕩÷⌜1«×`⌾⌽𝕨} # convert indices into a shape-⟨×´𝕨⟩ array into corresponding indices into a shape-𝕨 one
 MDSlash ⇐ {(0.13×≠⥊𝕩)>+´⥊𝕩? (≢𝕩) ReIndex /⥊𝕩; /○⥊⟜↕⟜≢ 𝕩} # multi-dimensional /𝕩
 MDSlashI ⇐ {<˘⍉> MDSlash 𝕩} # MDSlash but transposed output
