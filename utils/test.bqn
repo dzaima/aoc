@@ -62,14 +62,14 @@ RunTests ← { 𝕊:
   log ← {
     res ⇐ ⟨⟩
     Clear ⇐ {𝕊: res↩⟨⟩}
-    bqn ⇐ MakeBQN {Show⇐{res∾↩<𝕩⋄𝕩} ⋄ Out⇐{res∾↩<𝕩⋄𝕩} ⋄ Import⇐{!𝕩≡"../../utils/utils.bqn" ⋄ utils}}
+    bqn ⇐ MakeBQN {Show⇐{res∾↩<𝕩⋄𝕩} ⋄ Out⇐{res∾↩<𝕩⋄𝕩} ⋄ Import⇐{!"utils/utils.bqn" (-∘≠⊸↑≡⊣) 𝕩 ⋄ utils}}
   }
   
   tested ← 0
   fail ← 0
   
   { 𝕊 ⟨name⟩:
-    exp ← expMap.Get {𝕩/˜∧`𝕩∊'0'+↕10} 𝕩.path
+    exp ← expMap.Get 𝕩.number
     tested+↩ 1
     log.Clear@
     f ← name log.BQN 𝕩.srcBlock
@@ -105,13 +105,15 @@ timeEach ← "0.1"
   "raw": raw↩1;
   "test":     mode∾↩<"test";
   "perf"≡4↑𝕩? mode∾↩<"perf" ⋄ {𝕊: timeEach↩4↓𝕩}⍟(4≠≠) 𝕩;
+  '['=⊑𝕩? i ← ⊑𝕩⊐']' ⋄ tests∾↩< ⟨1↓i↑𝕩, (i+1)↓𝕩⟩;
   ⊑(⊑𝕩)∊'0'+↕10? tests∾↩ <𝕩;
   ! "Unknown argument -- "∾𝕩
 }¨ year.args
 
 tests {
-  𝕩↓˜↩ ¯4×".bqn"≡¯4↑𝕩
-  name ⇐ path ⇐ 𝕩∾".bqn"
+  number‿name0 ⇐ {0=•Type⊑𝕩? 𝕩; ⟨𝕩/˜∧`𝕩∊'0'+↕10, 𝕩⟩} 𝕩
+  name0↓˜↩ ¯4×".bqn"≡¯4↑name0
+  name ⇐ path ⇐ name0∾".bqn"
   fullpath ⇐ AtYear path
   src ⇐ •FChars fullpath
   srcBlock ⇐ "{𝕊:"∾src ∾ (@+10)∾"}"
