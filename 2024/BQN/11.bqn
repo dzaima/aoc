@@ -4,18 +4,15 @@ l ← Ints⊑•FLines 2024‿11 Input •args
 
 pows ← 10⋆↕16
 evens ← 0⌾⊑ 0=2|↕16
+rests ← 0⌾⊑ ¬evens
 
 •Show¨ +´∘⊑¨ { ns𝕊vs:
   lens ← pows⍋vs
   
-  zero ← lens=0
-  even ← lens⊏evens
-  rest ← (¬zero) ∧ ¬even
-  
   rn‿rv ← ∾¨<˘⍉>⟨
-    {vs ← zero/ns ⋄ vs ⋈ (≠vs)⥊1}
-    {ns‿vs‿ls: ⟨ns∾ns, ((ls÷2)⊏pows) (| ∾ ⌊∘÷˜) vs⟩} even⊸/¨ ns‿vs‿lens
-    2024⊸×⌾(1⊸⊑) rest⊸/¨ ns‿vs
+    (lens=0)⊸/¨ ns‿vs
+    {ns‿vs‿ls: ⟨ns∾ns, ((ls÷2)⊏pows) (| ∾ ⌊∘÷˜) vs⟩} (lens⊏evens)⊸/¨ ns‿vs‿lens
+    2024⊸×⌾(1⊸⊑) (lens⊏rests)⊸/¨ ns‿vs
   ⟩
   
   g ← ⊐ rv
