@@ -37,7 +37,7 @@ _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit number
   Sprinkle (⌊n÷600)⥊<"do()"
   Sprinkle (⌊n÷600)⥊<"don't()"
   l (@+10)¨⌾(((⌊0.5+ n÷3500) r.Deal ≠l)⊸⊏)↩
-  l∾@+10
+  l
 } _gen 3
 
 { 𝕊r:
@@ -216,6 +216,12 @@ _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit number
   '0'+<˘m
 } _gen 10
 
+{ 𝕊r:
+  n ← ScaleF 8
+  vs ← 0 ∾ r _fxRand¨ 7⌊1+↕n-1
+  ' 'Join Repr¨ vs
+} _gen 11
+
 # { 𝕊r:
 # } _gen
 
@@ -237,5 +243,5 @@ retry ← {⇐}
   args0 ← args
   res ← {𝕊: args↩args0 ⋄ rn+↩1 ⋄ F rng}•_while_ (retry⊸≡) retry
   {•Out ∾⟨path, ": ", •Repr 𝕩, " retries"⟩}⍟(1⊸≠) rn
-  path (0=•Type∘⊑)∘⊢◶•FChars‿•FLines <˘⍟(2==) res
+  path •FLines ⋈⍟(2=•Type∘⊑) <˘⍟(2==) res
 }
