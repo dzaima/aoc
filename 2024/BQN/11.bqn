@@ -10,7 +10,7 @@ rests ← 0⌾⊑ ¬evens
   lens ← pows⍋vs
   
   rn‿rv ← ∾¨<˘⍉>⟨
-    (lens=0)⊸/¨ ns‿vs
+    {ns←(lens=0)/ns ⋄ ⟨ns, 1¨ns⟩}
     {ns‿vs‿ls: ⟨ns∾ns, ((ls÷2)⊏pows) (| ∾ ⌊∘÷˜) vs⟩} (lens⊏evens)⊸/¨ ns‿vs‿lens
     2024⊸×⌾(1⊸⊑) (lens⊏rests)⊸/¨ ns‿vs
   ⟩
