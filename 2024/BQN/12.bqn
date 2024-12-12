@@ -13,8 +13,9 @@ p2 ← 0
 {
   c ← 𝕩=is
   area ← +´⥊ c
-  p1+↩ area × +´            {+´⥊         c ∧ ¬ 𝕏 c}¨ shifts
-  p2+↩ area × +´ (2⌽shifts) {+´⥊ (⊢∧·¬𝕎) c ∧ ¬ 𝕏 c}¨ shifts
+  edges ← {c ∧ ¬ 𝕏 c}¨ shifts
+  p1+↩ area × +´            {+´⥊         𝕩}¨ edges
+  p2+↩ area × +´ (2⌽shifts) {+´⥊ (⊢∧·¬𝕎) 𝕩}¨ edges
 }¨ ⍷⥊is
 •Show p1
 •Show p2
