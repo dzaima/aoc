@@ -2,20 +2,15 @@
 ⟨Input, _fx_⟩ ← •Import "../../utils/utils.bqn"
 l ← >•FLines 2024‿12 Input •args
 
-shifts ← ⟨»˘,«˘,«,»⟩
+shifts ← ⟨»˘,»,«˘,«⟩
 eq ← {l = 𝕏l}¨ shifts
 
-n ← ≠l
-is ← ⊐⌾⥊ {𝕊 p: p ⌈´ eq {𝕨 × 𝕏p}¨ shifts} _fx_ ≢ n‿n⥊1+↕≠⥊l
+is ← ⊐⌾⥊ {𝕊 p: p ⌈´ eq {𝕨 × 𝕏p}¨ shifts} _fx_ ≢ ↕∘≠⌾⥊ l
+isp ← is+1 # so that Nudge shifting in zeroes doesn't collide with index 0
 
-p1 ← 0
-p2 ← 0
-{
-  c ← 𝕩=is
-  area ← +´⥊ c
-  edges ← {c ∧ ¬ 𝕏 c}¨ shifts
-  p1+↩ area × +´            {+´⥊         𝕩}¨ edges
-  p2+↩ area × +´ (2⌽shifts) {+´⥊ (⊢∧·¬𝕎) 𝕩}¨ edges
-}¨ ⍷⥊is
-•Show p1
-•Show p2
+shs ← {𝕏isp}¨ shifts
+edges ← isp⊸≠¨ shs
+
+areas ← /⁼⥊is
+•Show +´ areas × +´¨ is ⊔ +´edges
+•Show +´ areas × +´¨ is ⊔ +´edges ∧ (¯1⌽edges) ∨ (¯1⌽shifts) {isp=𝕎𝕩}¨ shs
