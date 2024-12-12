@@ -12,5 +12,5 @@ shs ← {𝕏isp}¨ shifts
 edges ← isp⊸≠¨ shs
 
 areas ← /⁼⥊is
-•Show +´ areas × +´¨ is ⊔ +´edges
-•Show +´ areas × +´¨ is ⊔ +´edges ∧ (¯1⌽edges) ∨ (¯1⌽shifts) {isp=𝕎𝕩}¨ shs
+•Show +´ areas × +´¨ is ⊔○⥊ +´edges
+•Show +´ areas × +´¨ is ⊔○⥊ +´edges ∧ (¯1⌽edges) ∨ (¯1⌽shifts) {isp=𝕎𝕩}¨ shs
