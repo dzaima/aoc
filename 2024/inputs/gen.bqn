@@ -198,7 +198,7 @@ _retryThis ← {𝕨𝔽{𝕨𝔽𝕘}𝕩 •_while_(≡⟜retry) retry} # retr
   fs ← l / (≠l)↑ ⥊ (↕n+1)≍˘¯1
   gs ← 2↑((+`⌾⌽∘¬ > +`) fs=¯1) ⊔ fs
   ∧´×≠¨gs?
-  ∧´¯1≠ {(⊑𝕨)⋈¯1⊑𝕩}´gs? # no clue if this is a property the official inputs guarantee, but it was true on my input, and my solution breaks without it
+  ∧´¯1≠ {(⊑𝕨)⋈¯1⊑𝕩}´gs? # a property that was true in my input and 9_orig.bqn requires, but some inputs violate it
   
   ⋈'0'+l
   ; retry
