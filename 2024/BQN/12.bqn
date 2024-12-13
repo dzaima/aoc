@@ -14,3 +14,4 @@ edges ← isp⊸≠¨ shs
 areas ← /⁼⥊is
 •Show +´ areas × +´¨ is ⊔○⥊ +´edges
 •Show +´ areas × +´¨ is ⊔○⥊ +´edges ∧ (¯1⌽edges) ∨ (¯1⌽shifts) {isp=𝕎𝕩}¨ shs
+# TODO: remove ○⥊ from ⊔s when CBQN does that fast
