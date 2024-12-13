@@ -11,6 +11,8 @@ _gen ← {𝕩 days.Set 𝕗}
 
 _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit numbers, no leading zeroes
 
+_retryThis ← {𝕨𝔽{𝕨𝔽𝕘}𝕩 •_while_(≡⟜retry) retry} # retry 𝕨𝔽𝕩 until result isn't retry
+
 { 𝕊r:
   n ← ScaleF 1000
   n2 ← n×2
@@ -237,6 +239,43 @@ _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit number
   # m (26 r.Range˜≠)⌾((<˘ ⍷n‿2 r.Range n)⊸⊑)↩
   'A'+m
 } _gen 12
+
+{ 𝕊r:
+  n ← ScaleF 320
+  Check ← { a‿b‿r:
+    ah ← -´ r×⌽b
+    al ← -´ a×⌽b
+    0=al|ah?
+    an ← ah÷al
+    bh ← (⊑r) - an×⊑a
+    bl ← ⊑b
+    0=bl|bh?
+    (3×an) + bh÷bl
+    ; 0
+  }
+  
+  ¯1↓∾{ 𝕊𝕩:
+    a ← 2 r _fxRand 2
+    b ← 2 r _fxRand 2
+    ≠´a÷b?
+    ns ← 1+ 2 r.Range 99
+    { 𝕊:
+      an ← (-´ 1e13×⌽b) ÷ -´ a×⌽b
+      bn ← (1e13 - an×⊑a) ÷ ⊑b
+      ns+↩ ⌈an‿bn
+    }⍟⊢ 𝕩
+    ∧´ns>0?
+    r ← (+´ns×a‿b) - 1e13×𝕩
+    (𝕩⊑⟨0‿1,1‿0⟩) ≡ 0=Check¨ ⟨a‿b‿r, ⟨a,b,r+1e13⟩⟩? # check to make sure part1-intended or part2-intended doesn't happen to be valid for the other part, which could result in negative numbers
+    ⟨
+      {∾⟨"Button A: X+",𝕨,", Y+",𝕩⟩}´ Repr¨ a
+      {∾⟨"Button B: X+",𝕨,", Y+",𝕩⟩}´ Repr¨ b
+      {∾⟨"Prize: X=",𝕨,", Y=",𝕩⟩}´ Repr¨ r
+      ⟨⟩
+    ⟩
+    ; retry
+  }_retryThis ¨ n↑ /⁼ (n÷2) r.Deal n
+} _gen 13
 
 # { 𝕊r:
 # } _gen

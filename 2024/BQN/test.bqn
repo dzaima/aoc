@@ -13,11 +13,12 @@
     ⟨"10", 135‿189⟩
     ⟨"11", 204651‿241963594833562⟩
     ⟨"12", 3126602‿2311062⟩
+    ⟨"13", 32709‿61867094825367⟩
   ⟩
   
   path ⇐ •path
   args ⇐ •args
   all ⇐ ⊑¨ exp
   most ⇐ all
-  orig ⇐ ∾⟜"_orig"¨ all
+  orig ⇐ ∾⟜"_orig"¨ "13"⊸≢¨⊸/ all
 } •Import "../../utils/test.bqn"
