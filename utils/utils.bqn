@@ -1,4 +1,4 @@
-# ⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, Indices, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, _underSelect_, Tr, TW, Input⟩ ← •Import "../../utils/utils.bqn"
+# ⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, Indices, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, _underSelect_, Select, Tr, TW, Input⟩ ← •Import "../../utils/utils.bqn"
 RB ⇐ 2⊸×⊸+˜´⌽
 B10 ⇐ 10⊸×⊸+˜´⌽
 Num ⇐ •ParseFloat
@@ -25,7 +25,9 @@ Count ⇐ ⊐˜∘⊣⊏ ≠∘⊣↑ /⁼∘⊐
 _fx_ ⇐ {F _𝕣_ 𝔾 𝕩: ⊑{p‿n:n⋈F n}•_while_(𝔾´) 𝕩⋈𝔽𝕩} # fixed-point
 _fi_ ⇐ {F _𝕣_ 𝔾 𝕩: ¯1↓{𝕩∾<F ¯1⊑𝕩}•_while_(𝔾´¯2↑⊢) 𝕩⋈𝔽𝕩} # fixed-point with immediates
 
-_underSelect_ ⇐ {𝔽⌾((+´ (1«×`⌾⌽≢𝕩) × <˘⍟(2==) 𝕘)⊏⥊) 𝕩} # fast version of 𝔽⌾((<˘⍉𝕘)⊸⊑) 𝕩
+SelectInds ← {+´ (1«×`⌾⌽≢𝕩) × <˘⍟(2≤=) 𝕨}
+Select ⇐ SelectInds⊏⥊∘⊢
+_underSelect_ ⇐ {𝔽⌾((𝕘 SelectInds 𝕩)⊏⥊) 𝕩} # fast version of 𝔽⌾((<˘⍉𝕘)⊸⊑) 𝕩
 
 Tr ⇐ { # depth-transpose
   1≡=𝕩? <⎉1⍉>𝕩;

@@ -1,48 +1,58 @@
 #!/usr/bin/env bqn
-⟨SplitF, _underSelect_, MDSlash, Input⟩ ← •Import "../../utils/utils.bqn"
+⟨SplitF, _underSelect_, Select, MDSlash, Input⟩ ← •Import "../../utils/utils.bqn"
 a‿b ← ⟨⟩SplitF •FLines 2024‿15 Input •args
 a >↩
 b ∾↩
+MoveRight1 ← {𝕩↓˜↩1⋄(𝕩⊐'.')<○⊑𝕩⊐'#'? ".@"∾(k↑𝕩)∾(1+k←⊑𝕩⊐'.')↓𝕩; 𝕩}
+
+# part 1
 {
-  c←a
+  c ← a
   {
-    d ← ⊑𝕩⊐˜">v<^"
-    c ⌽∘⍉⍟d↩
-    y‿x← ⋈⁼MDSlash c='@'
-    c {𝕩↓˜↩1⋄('.'⊐˜𝕩)<○⊑'#'⊐˜𝕩? ".@"∾('O'⥊˜k)∾(1+k←⊑𝕩⊐'.')↓𝕩; 𝕩}_underSelect_⟨y, {x+↕𝕩-x}1⊑≢c⟩↩ # ⌾(x↓y⊏⊢)↩
-    c ⌽∘⍉⍟(4|4-d)↩
+    d ← ⊑">v<^"⊐𝕩
+    y‿x ← ⋈⁼MDSlash c='@'
+    c MoveRight1 _underSelect_((≢c) {d≥2? 𝕩-↕𝕩+1; 𝕩+↕𝕨-𝕩}⌾((¬2|d)⊸⊑) y‿x)↩
     1
   }¨ b
   •Show +´∾100‿1⊸×¨ MDSlash c='O'
 }
 
+# part 2
 {
-  c2 ← 2/˘'.'¨⌾((a='O')⊸(/○⥊)) a
-  c2 '.'⌾((1⊑MDSlash c2='@')⊸⊑)↩
-  {c2 "[]"⌾(((⊢⋈0‿1⊸+) 𝕩×1‿2)⊸⊑)↩⋄1}¨ MDSlash a='O'
+  c ← 2/˘'.'¨⌾((a='O')⊸(/○⥊)) a
+  c '.'⌾((1⊑MDSlash c='@')⊸⊑)↩
+  {c "[]"⌾(((⊢⋈0‿1⊸+) 𝕩×1‿2)⊸⊑)↩⋄1}¨ MDSlash a='O'
+  
+  h‿w ← ≢c
+  
   {
-    d ← ⊑𝕩⊐˜">v<^"
+    d ← ⊑">v<^"⊐𝕩
+    y‿x ← ⋈⁼MDSlash c='@'
     {
       ⊑d∊0‿2?
-        c2 ⌽∘⍉⍟d↩
-        y‿x← ⋈⁼MDSlash c2='@'
-        c2 {𝕩↓˜↩1⋄('.'⊐˜𝕩)<○⊑'#'⊐˜𝕩? ".@"∾(k↑𝕩)∾(1+k←⊑𝕩⊐'.')↓𝕩; 𝕩}_underSelect_⟨y, {x+↕𝕩-x}1⊑≢c2⟩↩ #⌾⌽⌾((1+x)↑y⊏⊢)↩
-        c2 ⌽∘⍉⍟(4-d)↩
+        c MoveRight1 _underSelect_⟨y, {d=2? x-↕x+1; x+↕w-x}⟩↩
       ;
-        c2 ⌽⍟(d=1)↩
-        ma ← c2='@'
-        {𝕊:
-          t←«𝕩
-          t2←t∧c2≠'.'
-          t2∨↩ »˘ t2 ∧ c2='['
-          t2∨↩ «˘ t2 ∧ c2=']'
-          ma∨↩t2
-          t2
-        }•_while_(∨´⥊) ma
-        {𝕊: v0←ma/○⥊c2⋄ c2 '.'¨⌾((/⥊ma)⊏⥊)↩ ⋄ c2 v0⌾((/⥊«ma)⊏⥊)↩}⍟⊢ ∧´'#'≠(«ma)/○⥊c2
-        c2 ⌽⍟(d=1)↩
+        dy ← d⊑0‿1‿0‿¯1
+        ai ← ⟨⋈y, ⋈x⟩
+        {
+          𝕊 xs:
+          y+↩dy
+          (y≥0) ∧ y<h?
+          cv ← y‿xs Select c
+          xs‿cv (cv≠'.')⊸/¨↩
+          xs∾↩ (1+(cv='[')/xs) ∾ ¯1+(cv=']')/xs
+          xs ⍷↩
+          ai∾¨↩ ⟨y¨ xs, xs⟩
+          xs
+          ; ↕0
+        }•_while_ (×≠) ⋈x
+        av ← ai Select c
+        { 𝕊:
+          c '.'¨_underSelect_ ai↩
+          c av _underSelect_(dy‿0+ai)↩
+        }⍟⊢ ∧´'#'≠av
     }
     1
   }¨ b
-  •Show +´∾100‿1⊸×¨ MDSlash c2='['
+  •Show +´∾100‿1⊸×¨ MDSlash c='['
 }
