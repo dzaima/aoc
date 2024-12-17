@@ -1,6 +1,6 @@
 #!/usr/bin/env bqn
 ⟨Ints, SplitF, Input⟩ ← •Import "../../utils/utils.bqn"
-l ← Ints¨¨ ⟨⟩SplitF•FLines 2024‿13 Input •args
+l ← ⟨⟩SplitF Ints¨ •FLines 2024‿13 Input •args
 
 # ≡´ (⟨r0,r1⟩ - ⟨a0,a1⟩×an) ÷ ⟨b0,b1⟩
 # ((r0 - a0×an) ÷ b0) = (r1 - a1×an) ÷ b1

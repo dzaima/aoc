@@ -22,7 +22,7 @@ best ← (⋈⁼ MDSlash ve) ⊑ ⌊´dists
 
 •Show best-start
 
-mv1 ← nw⊸∧¨ dists = ¯1 + MvI dists
+mv1 ← nw⊸∧¨ dists = MvI dists-1
 r1  ← nw⊸∧¨ dists =  1 ⌽ dists-1000
 r3  ← nw⊸∧¨ dists = ¯1 ⌽ dists-1000
 •Show +´⥊∨´ {
