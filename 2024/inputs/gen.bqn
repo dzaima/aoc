@@ -359,6 +359,12 @@ _retryThis ← {𝕨𝔽{𝕨𝔽𝕘}𝕩 •_while_(≡⟜retry) retry} # retr
   ⟨", "Join r.Deal∘≠⊸⊏ ps⟩∾⟨⟨⟩⟩∾ds
 } _gen 19
 
+{ 𝕊r:
+  n ← ScaleF 5
+  l ← ScaleF 3
+  ('0'+n‿l r.Range 10)∾˘'A'
+} _gen 21
+
 # { 𝕊r:
 # } _gen
 
