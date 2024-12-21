@@ -1,4 +1,4 @@
-# ⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, Indices, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, _underSelect_, Select, Tr, TW, Input⟩ ← •Import "../../utils/utils.bqn"
+# ⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, Indices, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, _underSelect_, Select, Tr, TW, _memo, Input⟩ ← •Import "../../utils/utils.bqn"
 RB ⇐ 2⊸×⊸+˜´⌽
 B10 ⇐ 10⊸×⊸+˜´⌽
 Num ⇐ •ParseFloat
@@ -14,9 +14,10 @@ Split ⇐ {((¯1+⊢×·+`»⊸<)¬𝕩=𝕨)⊔𝕩}
 SplitF ⇐ {((¯1+⊢×·+`»⊸<)¬𝕨⊸≡¨𝕩)⊔𝕩}
 
 Indices ⇐ <⥊¨·⊣⌜˜`⌾⌽↕¨ # <˘⍉⁼>↕𝕩
-ReIndex ⇐ {<˘𝕨|⎉1⌊𝕩÷⌜1«×`⌾⌽𝕨} # convert indices into a shape-⟨×´𝕨⟩ array into corresponding indices into a shape-𝕨 one
+ReIndexH ⇐ {𝕨|⎉1⌊𝕩÷⌜1«×`⌾⌽𝕨}
+ReIndex ⇐ <˘ ReIndexH # convert indices into a shape-⟨×´𝕨⟩ array into corresponding indices into a shape-𝕨 one
 MDSlash ⇐ {(0.13×≠⥊𝕩)>+´⥊𝕩? (≢𝕩) ReIndex /⥊𝕩; /○⥊⟜↕⟜≢ 𝕩} # multi-dimensional /𝕩
-MDSlashI ⇐ {<˘⍉> MDSlash 𝕩} # MDSlash but transposed output
+MDSlashI ⇐ {<˘⍉ (≢𝕩) ReIndexH /⥊𝕩} # MDSlash but transposed output
 
 Unjoin ⇐ {((≠¨𝕨)/↕≠𝕨) ⊔ 𝕩}
 
@@ -41,3 +42,5 @@ TW ⇐ { # transposed depth-separated 𝕨↕arr
 
 base ← •file.At "../"
 Input ⇐ {· 𝕊 ⟨path⟩: path; y‿d 𝕊 ⟨⟩: ∾⟨base, •Repr y, "/inputs/", •Repr d, ".txt"⟩}
+
+_memo ⇐ {F _𝕣: (•HashMap˜⟨⟩){𝔽_𝕣𝕩: 𝕗.Has𝕩? 𝕗.Get 𝕩; 𝔽_𝕣𝕩: 𝕩⊸𝕗.Set⊸⊢ F 𝕩}}
