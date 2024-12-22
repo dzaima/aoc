@@ -365,6 +365,11 @@ _retryThis ← {𝕨𝔽{𝕨𝔽𝕘}𝕩 •_while_(≡⟜retry) retry} # retr
   ('0'+n‿l r.Range 10)∾˘'A'
 } _gen 21
 
+{ 𝕊r:
+  n ← ScaleF 1750
+  Repr¨ n r.Range 16777216
+} _gen 22
+
 # { 𝕊r:
 # } _gen
 
