@@ -370,8 +370,10 @@ _retryThis ← {𝕨𝔽{𝕨𝔽𝕘}𝕩 •_while_(≡⟜retry) retry} # retr
   Repr¨ n r.Range 16777216
 } _gen 22
 
-# { 𝕊r:
-# } _gen
+{ 𝕊r:
+  n ← ScaleF 500
+  (⋈⟨⟩) Join ⌽¨⌾((⌊n÷2)⊸↑) {<˘ ⊏⟜".#" 𝕩<⌜˜↕7}¨ <˘ 1 + n‿5 r.Range 6
+} _gen 25
 
 ScaleD ← !
 ScaleF ← !
