@@ -3,7 +3,7 @@
 l ← >•FLines 2024‿4 Input •args
 
 a ← ⌽∘⍉⍟(↕4) l
-lp ← l∾˘ ' '¨l
+lp ← l∾˘' '
 b ← (-↕≠l) ⌽˘ lp
 c ← ( ↕≠l) ⌽˘ lp
 

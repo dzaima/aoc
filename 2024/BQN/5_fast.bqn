@@ -3,7 +3,7 @@
 bytes ← •file.MapBytes 2024‿5 Input •args
 
 nw ← 1+ ⊑bytes⊐'|'         # number width, plus 1
-sep ← ⋈⁼/ (@‿@+10) ⍷ bytes # index of the the two newlines
+sep ← ⋈⁼/ (2⥊@+10) ⍷ bytes # index of the the two newlines
 
 Nums ← {(1⊸⊏˘ + 10×0⊸⊏˘) '0'-˜∘‿nw⥊𝕩} # parse an nw×n string into n numbers, ignoring the last char of each
 
