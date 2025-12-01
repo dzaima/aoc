@@ -11,7 +11,7 @@ h ← ⌊e÷100   # hundreds
 z ← e=h×100  # zeroes (mod 100)
 •Show +´z
 
-hs ← »h-z∧«l
-he ← h-z∧l
+hs ← »h-z∧«l # starts of hundreds ranges
+he ←  h-z∧ l # ends of hundreds ranges
 •Show +´|hs-he
 # ! (+´|hs-he) ≡ +´0=∾(50»100|e){100|𝕨+(×𝕩)×↕|𝕩}¨d
