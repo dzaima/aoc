@@ -2,7 +2,7 @@
 ⟨Input⟩ ← •Import "../../utils/utils.bqn"
 i ← •FLines 2025‿1 Input •args
 
-l ← 'L'= ⊑¨ i # which lines go right
+l ← 'L'= ⊑¨ i # which lines go left
 n ← {•ParseFloat 1↓𝕩}¨ i # numbers
 
 d ← n×l⊏1‿¯1 # delta
