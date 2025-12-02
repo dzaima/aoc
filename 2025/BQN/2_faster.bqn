@@ -13,6 +13,8 @@ all ← { 𝕊 l: # for each necessary number length:
   (2∾˜2≠l÷ds) ⊔ ps # group by whether number is repeated twice
 }¨ 1+↕max
 
-ps ← ∾∘∾¨ <˘⍉> all # ⟨all twice-repeated invalid IDs ⋄ all other invalid IDs⟩
-ps {i2‿ir: ⟨i2, ∧⍷¬∘∊⟜i2⊸/ ir⟩}↩ # deduplicate the other IDs, and sort both (i2 is already sorted)
-•Show¨ +` {𝕊a: +´ {s‿e: +´s↓e↑a}˘ a⍋∧>l}¨ ps # binary-search the input in the invalid IDs, sum respective slices
+ps ← ∾∘∾¨ <˘⍉> all # ⟨all 2x-repeated invalid IDs ⋄ ≥3x-repeated IDs⟩
+ps ∧⌾(1⊸⊑)↩ # sort the ≥3x-repeated IDs (2x-repeated is already sorted)
+i2‿ir ← {𝕊a: ∾{s‿e←a⍋𝕩 ⋄ s↓e↑a}¨ l}¨ ps # binary-search the input in the invalid IDs & slice them
+•Show p1 ← +´i2 # 2x-repeated doesn't have duplicates
+•Show p1+´ ⍷ ¬∘∊⟜i2⊸/ ir # clean up ≥3x duplicates
