@@ -7,7 +7,7 @@
   
   path ⇐ •path
   args ⇐ •args
-  fast ⇐ ⟨"1_fast"⟩
+  fast ⇐ "1_fast"‿"2_faster"
   all  ⇐ fast∾ ⊑¨ exp
   most ⇐ all
   orig ⇐ ∾⟜"_orig"¨ all

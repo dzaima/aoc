@@ -1,0 +1,18 @@
+#!/usr/bin/env bqn
+⟨Ints, Split, Input⟩ ← •Import "../../utils/utils.bqn"
+l ← Ints¨','Split ⊑•FLines 2025‿2 Input •args
+
+max ← ⌈10⋆⁼2+⌈´∾l
+
+all ← { 𝕊 l: # for each necessary number length:
+  ds ← (0=|⟜𝕩)⊸/ ↕l # divisors (excl. self)
+  ps ← { 𝕊 k: # for each divisor:
+    r ← {𝕩+↕9×𝕩} 10⋆k-1 # e.g. for k=3: 100…999
+    r×↩ +´ 10⋆ k× ↕l÷k  # multiply by e.g. 100100100100 to get length-l numbers
+  }¨ ds
+  (2∾˜2≠l÷ds) ⊔ ps # group by whether number is repeated twice
+}¨ 1+↕max
+
+ps ← ∾∘∾¨ <˘⍉> all # ⟨all twice-repeated invalid IDs ⋄ all other invalid IDs⟩
+ps {i2‿ir: ⟨i2, ∧⍷¬∘∊⟜i2⊸/ ir⟩}↩ # deduplicate the other IDs, and sort both (i2 is already sorted)
+•Show¨ +` {𝕊a: +´ {s‿e: +´s↓e↑a}˘ a⍋∧>l}¨ ps # binary-search the input in the invalid IDs, sum respective slices
