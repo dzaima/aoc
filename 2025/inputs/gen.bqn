@@ -52,15 +52,20 @@ _retryThis ← {𝕨𝔽{𝕨𝔽𝕘}𝕩 •_while_(≡⟜retry) retry} # retr
   
   res ← ""
   curr ← 0
+  starts‿ends ← 2⥊<↕0
   {𝕊:
     new ← 1
-    k ← √ _rDist one
+    k ← 2⌈√ _rDist one
     (curr+k)≤total+err?
     start ← ⋆⁼ _rDist max
     end ← start+k
-    ∧´ NonRepeating¨ start‿end? # make sure endpoints aren't repeating
+    ∧´¬ (start≤ends)∧end≥starts? # range shouldn't overlap any previous range
+    1≥ -´ ≠∘•Repr¨ end‿start? # endpoint lengths should differ by at most 1 digit
+    ∧´ 0.001<|0.5-1|0.5+ 10⋆⁼ end‿start? # endpoints shouldn't be an exact power of 10
+    ∧´ NonRepeating¨ start‿end? # endpoints themselves shouldn't be repeating
     curr+↩ k
     res∾↩ ∾⟨',', •Repr start, '-', •Repr end⟩
+    starts‿ends∾¨↩ start‿end
     ;retry
   }_retryThis •_while_{𝕊: curr≤total-err} @
   1↓res
