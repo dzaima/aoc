@@ -36,6 +36,36 @@ _retryThis ← {𝕨𝔽{𝕨𝔽𝕘}𝕩 •_while_(≡⟜retry) retry} # retr
   }_retryThis¨ ↕n
 } _gen 1
 
+
+{ 𝕊r:
+  _rDist ← {⌊ 𝔽⁼ (r.Range 0)×𝔽 𝕩}
+  total ← ScaleF 2000000
+  one ← ScaleF 200000
+  max ← 1e10
+  err ← 0.05×total # tolerated deviation from total ID count
+  
+  NonRepeating ← {𝕊:
+    s ← •Repr 𝕩
+    k ← ≠s
+    ∧´ {1≠≠⍷∘‿𝕩⥊s}¨ (0=|⟜k)⊸/ 1↓↕k
+  }
+  
+  res ← ""
+  curr ← 0
+  {𝕊:
+    new ← 1
+    k ← √ _rDist one
+    (curr+k)≤total+err?
+    start ← ⋆⁼ _rDist max
+    end ← start+k
+    ∧´ NonRepeating¨ start‿end? # make sure endpoints aren't repeating
+    curr+↩ k
+    res∾↩ ∾⟨',', •Repr start, '-', •Repr end⟩
+    ;retry
+  }_retryThis •_while_{𝕊: curr≤total-err} @
+  1↓res
+} _gen 2
+
 ScaleD ← !
 ScaleF ← !
 retry ← {⇐}
