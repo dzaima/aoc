@@ -7,7 +7,8 @@
   
   path ⇐ •path
   args ⇐ •args
-  all ⇐ ⊑¨ exp
+  fast ⇐ ⟨"1_fast"⟩
+  all  ⇐ fast∾ ⊑¨ exp
   most ⇐ all
   orig ⇐ ∾⟜"_orig"¨ all
 } •Import "../../utils/test.bqn"

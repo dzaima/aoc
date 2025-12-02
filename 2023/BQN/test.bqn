@@ -30,7 +30,8 @@
   
   path ⇐ •path
   args ⇐ •args
-  all ⇐ •Repr¨ 1+↕25
+  fast ⇐ ⟨"1_fast"⟩
+  all  ⇐ fast∾ •Repr¨ 1+↕25
   most ⇐ (¬∊⟜"17"‿"23"‿"25")⊸/ all
   orig ⇐ (∾⟜"_orig"¨ 1↓(¬∊⟜⟨"20","24","25"⟩)⊸/ all)∾⟨"20_orig_part2"⟩
 } •Import "../../utils/test.bqn"

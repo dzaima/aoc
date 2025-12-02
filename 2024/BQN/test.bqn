@@ -24,7 +24,8 @@
   
   path ⇐ •path
   args ⇐ •args
-  all ⇐ "21"⊸≢¨⊸/ ⊑¨ exp
+  fast ⇐ "1_fast"‿"2_short"‿"4_fast"‿"5_fast"‿"10_fast"
+  all  ⇐ fast∾ "21"⊸≢¨⊸/ ⊑¨ exp
   most ⇐ all
   orig ⇐ ∾⟜"_orig"¨ ⟨"21"⟩∾ "13"⊸≢¨⊸/ all
 } •Import "../../utils/test.bqn"
