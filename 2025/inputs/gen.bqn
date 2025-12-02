@@ -15,8 +15,6 @@ _fxRand ← {p ← 10⋆𝕩-1 ⋄ p + 𝕨 𝕗.Range 9×p} # 𝕩-digit number
 
 _retryThis ← {𝕨𝔽{𝕨𝔽𝕘}𝕩 •_while_(≡⟜retry) retry} # retry 𝕨𝔽𝕩 until result isn't retry
 
-_nLines ← {Line _𝕣 n: l←⟨⟩ ⋄ {𝕊: @≢r←Line ≠l? l∾↩<r ⋄ @; @}•_while_{𝕊: n≠≠l} @ ⋄ l}
-
 { 𝕊r:
   K ← r.Range
   Q ← {𝕩≥K 0}
@@ -34,8 +32,8 @@ _nLines ← {Line _𝕣 n: l←⟨⟩ ⋄ {𝕊: @≢r←Line ≠l? l∾↩<r �
     (n≠𝕩+1) ∨ 0≠c2? # don't end on 0 on last line
     c ↩ c2
     (r⊑"LR")∾•Repr fo
-    ;@
-  }_nLines n
+    ; retry
+  }_retryThis¨ ↕n
 } _gen 1
 
 ScaleD ← !
@@ -55,6 +53,6 @@ retry ← {⇐}
   rn ← 0
   args0 ← args
   res ← {𝕊: args↩args0 ⋄ rn+↩1 ⋄ F rng}•_while_ (retry⊸≡) retry
-  •Out ∾⟨"Wrote ",path,{1≠rn? ∾⟨"; ",•Repr rn, " retries"⟩; ""}⟩
   path •FLines ⋈⍟(2=•Type∘⊑) <˘⍟(2==) res
+  •Out ∾⟨"Wrote ",path,{1≠rn? ∾⟨"; ",•Repr rn, " retries"⟩; ""}⟩
 }
