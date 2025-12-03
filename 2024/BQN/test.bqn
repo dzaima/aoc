@@ -27,5 +27,5 @@
   fast ⇐ "1_fast"‿"2_short"‿"4_fast"‿"5_fast"‿"10_fast"
   all  ⇐ fast∾ "21"⊸≢¨⊸/ ⊑¨ exp
   most ⇐ all
-  orig ⇐ ∾⟜"_orig"¨ ⟨"21"⟩∾ "13"⊸≢¨⊸/ all
+  orig ⇐ ∾⟜"_orig"¨ "13"⊸≢¨⊸/ ⊑¨ exp
 } •Import "../../utils/test.bqn"

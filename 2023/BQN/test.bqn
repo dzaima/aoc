@@ -33,5 +33,5 @@
   fast ⇐ ⟨"1_fast"⟩
   all  ⇐ fast∾ •Repr¨ 1+↕25
   most ⇐ (¬∊⟜"17"‿"23"‿"25")⊸/ all
-  orig ⇐ (∾⟜"_orig"¨ 1↓(¬∊⟜⟨"20","24","25"⟩)⊸/ all)∾⟨"20_orig_part2"⟩
+  orig ⇐ (∾⟜"_orig"¨ ¬∘∊⟜("1"‿"20"‿"24"‿"25"∾fast)⊸/ all)∾⟨"20_orig_part2"⟩
 } •Import "../../utils/test.bqn"

@@ -10,5 +10,5 @@
   fast ⇐ "1_fast"‿"2_faster"
   all  ⇐ fast∾ ⊑¨ exp
   most ⇐ all
-  orig ⇐ ∾⟜"_orig"¨ all
+  orig ⇐ ∾⟜"_orig"¨ ⊑¨ exp
 } •Import "../../utils/test.bqn"
