@@ -2,10 +2,10 @@
 # Usage: ./gen.bqn outputFilename [seed (u for random, 1 for default)] [...day-specific args]
 # Day number is inferred as the numeric prefix of the filename
 MakeRand ← •MakeRand
-⟨MDSlash⟩ ← •Import "../../utils/utils.bqn"
+⟨MDSlash, Repr0⇐Repr⟩ ← •Import "../../utils/utils.bqn"
 
 Join ← {(≠𝕨)↓ ∾ 𝕨⊸∾¨ 𝕩}
-Repr ← '-'⌾⊑⍟('¯'=⊑) •Repr
+Repr ← '-'⌾⊑⍟('¯'=⊑) Repr0
 
 days ← •HashMap˜⟨⟩
 
@@ -88,6 +88,23 @@ Gaussian ← {s𝕊𝕩: (÷√2×π××˜s) × ⋆-0.5××˜𝕩÷s}
   b∨↩ 2<(sz r.Range 0) × +´ «‿»‿⊢{𝕎𝕩}¨< +´«‿»‿⊢{𝕎𝕩}¨< b
   ⊏⟜".@" b
 } _gen 4
+
+{𝕊r:
+  max ← 6e14
+  rn ← ScaleF 184
+  in ← ScaleF 1000
+  rs ← ∘‿2⥊ ∧ (rn×2) r.Range 0
+  rs+↩ 0≍˘ rn÷⊸× {[a,b]: b×÷0.4+a} 2‿rn r.Range 0
+  
+  rs ↩ ⌊max×rs
+  ∧˘⊸≡ rs?
+  rs r.Deal∘≠⊸⊏↩
+  rs ↩ {∾∾⟜'-'⌾⊑ Repr¨ 𝕩}¨ <˘ rs
+  is ← Repr¨ ⌊max×in r.Range 0
+  
+  rs ∾ ⟨""⟩ ∾ is
+  ;retry
+} _gen 5
 
 # {𝕊r:
 # } _gen
