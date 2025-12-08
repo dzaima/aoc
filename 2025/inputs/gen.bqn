@@ -146,6 +146,28 @@ Gaussian ← {s𝕊𝕩: (÷√2×π××˜s) × ⋆-0.5××˜𝕩÷s}
   ⟨'S'⌾(h⊸⊑)e,e⟩ ∾ m
 } _gen 7
 
+{𝕊r:
+  n ← ScaleF 1000
+  max ← 1e5
+  
+  l ← ⟨⟩
+  t ← 3⥊<↕0
+  m ← •HashMap˜ ↕0 # for ensuring that there's no two junction pairs with the same distance
+  {𝕊:
+    n ← 3 r.Range max
+    d ← +´×˜t-n
+    d≡⍷d? # make sure this junction doesn't itself add colliding distances
+    ¬∨´m.Has¨ d? # and doesn't collide with any previous ones either
+      d m.Set¨ 0
+      l∾↩ <n
+      t∾¨↩ n
+      @;
+    retry
+  }_retryThis¨ ↕n
+  
+  {','Join •Repr¨ 𝕩}¨ l
+} _gen 8
+
 # {𝕊r:
 # } _gen
 
