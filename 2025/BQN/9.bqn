@@ -29,7 +29,7 @@ mx ← 0
     # p0 ← 𝕨⋈𝕩
     x0‿x1 ∧↩
     y1‿x1+↩1
-    sz ← ×´1+|⌾⊑ (𝕨⋈¨𝕩) (-´⊏)¨ ul
+    sz ← ×´1+| (𝕨⋈¨𝕩) (-´⊏)¨ ul
     
     ok ← ∧´ {∧´x0↓x1↑𝕩}¨ y0↓y1↑m
     # d ← x1-x0 ⋄ ok ← ∧´ {d≤⊑0⊐˜x0↓𝕩}¨ y0↓y1↑m # alternative way of doing the above
