@@ -18,16 +18,9 @@ r ← Newrepl@
 solve ← r.Exec "
 { c 𝕊 t:
   k ← Int∘@¨ t
-  n ← (∧´k≥0) ∧´ c = +´k × t
-  best ← @
+  req ← (∧´k≥0) ∧´ c = +´k × t
   sum ← +´k
-  {𝕊:
-    Sat n ∧ {best≡@? 1; sum<best}?
-    b2 ← FindToBQN sum
-    (best ↩ b2) ⊢ b2≠best
-    ;0
-  }•_while_⊢ 1
-  best
+  {𝕊: FindToBQN sum}•_while_{Sat req ∧ {@: 1; sum<𝕩}𝕩} @
 }
 "
 
