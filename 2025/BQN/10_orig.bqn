@@ -1,4 +1,5 @@
 #!/usr/bin/env bqn
+# part 1: 6:08; both: 22:42
 ⟨SMT, RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, Indices, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, _underSelect_, Select, Tr, TW, _memo, Input⟩ ← •Import "../../utils/utils.bqn"
 l ← {a‿b←(⊑𝕩⊐']')((1↓↑) ⋈ ·Ints¨ ' 'Split 2⊸+⊸↓)𝕩⋄⟨'#'=a,¯1↓b,¯1⊑b⟩}¨ •FLines 2025‿10 Input •args
 
