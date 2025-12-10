@@ -46,3 +46,10 @@ Input ⇐ {· 𝕊 ⟨path⟩: path; y‿d 𝕊 ⟨⟩: ∾⟨base, •Repr y, "
 _memo ⇐ {F _𝕣: (•HashMap˜⟨⟩){𝔽_𝕣𝕩: 𝕗.Has𝕩? 𝕗.Get 𝕩; 𝔽_𝕣𝕩: 𝕩⊸𝕗.Set⊸⊢ F 𝕩}}
 
 BrailleDisplay ⇐ {@+10240+256|⥊˘ 1‿8•bit._cast 0‿2‿4‿1‿3‿5‿6‿7⊸⊏⎉1 ⥊⎉2 0‿2‿1‿3⍉⁼ 4‿2(⊢⥊˜·⥊≢⊸÷˜≍˘⊣) (4‿2×·⌈4‿2÷˜≢)⊸↑ 𝕩}
+
+GetSmtEnv ← {𝕊: getSmtEnv ↩ •SH "printenv"‿"BQN_SMT"}
+SMT ⇐ { 𝕊 options:
+  c‿o‿e ← GetSmtEnv@
+  {𝕊: •Out "Needs bqn-smt! Set the environment variable BQN_SMT to a path to https://codeberg.org/dzaima/bqn-smt (or to "∾((⊣∾" or "∾⊢)´ ∾⟜".bqn"¨ options)∾" within it to use a specific engine)" ⋄ •Exit 2}⍟⊢ 0≢c
+  •Import {".bqn"≡¯4↑𝕩? 𝕩; 𝕩•file.At (⊑options)∾".bqn"} ¯1↓o
+}
