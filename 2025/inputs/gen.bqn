@@ -168,6 +168,27 @@ Gaussian ← {s𝕊𝕩: (÷√2×π××˜s) × ⋆-0.5××˜𝕩÷s}
   {','Join •Repr¨ 𝕩}¨ l
 } _gen 8
 
+{𝕊r:
+  Ra ← r.Range
+  n ← ScaleF 166
+  {𝕊:
+    k ← 4+Ra 7
+    init ← k Ra 2
+    wires ← {𝕊:
+      (1+Ra k) r.Subset k
+    }¨ ↕(k-2) + Ra 5+k=10
+    
+    wt ← > (k↑/⁼)¨ wires
+    Ok ← {𝕊 init: ∨´ {∧´¬init≠˝𝕩/wt}¨ ⥊↕2⥊˜≠wt}
+    Ok init?
+    
+    # e ← k Ra 10×k
+    e ← +˝ wt × (≠wires) Ra 10+Ra 30
+    ∾⟨"[", ⊏⟜".#" init, "]", ∾{" ("∾")"∾˜','Join•Repr¨ 𝕩}¨wires, " {", ','Join•Repr¨ e, "}"⟩
+    ;retry
+  }_retryThis¨ ↕n
+} _gen 10
+
 # {𝕊r:
 # } _gen
 
