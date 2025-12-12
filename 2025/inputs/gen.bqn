@@ -189,6 +189,38 @@ Gaussian ← {s𝕊𝕩: (÷√2×π××˜s) × ⋆-0.5××˜𝕩÷s}
   }_retryThis¨ ↕n
 } _gen 10
 
+{𝕊r:
+  rn ← ScaleF 1000
+  ssz ← 3‿3
+  sn ← ScaleF 6
+  res ← ⟨⟩
+  shapes ← {𝕊:
+    tgt ← ⌊(2÷˜1+r.Range 0)×´ssz
+    s ← {p←(⌽⍟(r.Range 2) 0⋈¯1⋆r.Range 2)+r.Range∘≠⊸⊑ /○⥊⟜↕⟜≢𝕩 ⋄ 1⌾((0⌈p⌊ssz-1)⊸⊑) 𝕩}•_while_{𝕊: tgt≠+´⥊𝕩} 1⌾((r.Range¨ssz)⊸⊑) ssz⥊0
+    res∾↩⟨':'∾˜•Repr 𝕩⟩∾(<˘s⊏".#")∾⟨⟨⟩⟩
+    tgt
+  }¨ ↕sn
+  
+  WithSum ← {r.Deal∘≠⊸⊏ -⟜» 𝕩∾˜ ∧ (𝕨-1) r.Range 𝕩+1} # 𝕨 random numbers, with sum 𝕩
+  
+  res∾↩ {𝕊:
+    rsz ← 35 + 2 r.Range 16
+    fittableShapes ← ×´⌊rsz÷ssz
+    fittableCells ← ×´rsz
+    ok ← r.Range 2
+    ok∨↩ fittableCells > 60×+´shapes
+    ns ← {
+      ok?
+        (30+sn r.Range 30) ⌊ sn WithSum ⌊0.9×fittableShapes
+      ;
+        {𝕊: v←sn r.Range 81 ⋄ fittableCells < +´v×shapes? v; retry}_retryThis @
+    }
+    ∾⟨(⊣∾'x'∾⊢)´•Repr¨rsz, ": ", ' 'Join •Repr¨ ns⟩
+  }¨ ↕rn
+  
+  res
+} _gen 12
+
 # {𝕊r:
 # } _gen
 
