@@ -1,6 +1,6 @@
 licenses/LICENSE-MIT applies to all files other than input files (`*.in`, `*.txt`).
 
-Year 2024 inputs (i.e. `2024/inputs/*.txt`) are under licenses/UNLICENSE (they have ben generated via `inputs/gen_all.bqn` on CBQN 0.8.0).
+Year 2024 & 2025 inputs (i.e. `2024/inputs/*.txt` & `2025/inputs/*.txt`) are under licenses/UNLICENSE (they have ben generated via `inputs/gen_all.bqn` on CBQN 0.10.0).
 
 Year 2023 inputs (i.e. `2023/inputs/*.txt`) are under licenses/LICENSE-MIT-mattcl; they're taken from https://github.com/mattcl/unofficial-aoc2023-inputs/tree/master (`input-001.txt` for each day).
 
