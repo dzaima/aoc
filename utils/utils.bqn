@@ -43,7 +43,10 @@ TW ⇐ { # transposed depth-separated 𝕨↕arr
 base ← •file.At "../"
 Input ⇐ {· 𝕊 ⟨path⟩: path; y‿d 𝕊 ⟨⟩: ∾⟨base, •Repr y, "/inputs/", •Repr d, ".txt"⟩}
 
-_memo ⇐ {F _𝕣: (•HashMap˜⟨⟩){𝔽_𝕣𝕩: 𝕗.Has𝕩? 𝕗.Get 𝕩; 𝔽_𝕣𝕩: 𝕩⊸𝕗.Set⊸⊢ F 𝕩}}
+MemoInit ⇐ { 𝕊 init:
+  {F _𝕣: (•HashMap´init){𝔽_𝕣𝕩: 𝕗.Has𝕩? 𝕗.Get 𝕩; 𝔽_𝕣𝕩: 𝕩⊸𝕗.Set⊸⊢ F 𝕩}}
+}
+memo ⇐ MemoInit ⟨⟩‿⟨⟩
 
 BrailleDisplay ⇐ {@+10240+256|⥊˘ 1‿8•bit._cast 0‿2‿4‿1‿3‿5‿6‿7⊸⊏⎉1 ⥊⎉2 0‿2‿1‿3⍉⁼ 4‿2(⊢⥊˜·⥊≢⊸÷˜≍˘⊣) (4‿2×·⌈4‿2÷˜≢)⊸↑ 𝕩}
 
