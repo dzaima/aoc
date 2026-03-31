@@ -17,7 +17,7 @@ r ← Newrepl@
 
 solve ← r.Exec "
 { c 𝕊 t:
-  k ← Int∘@¨ t
+  k ← $¨ (≠t)⥊int
   req ← (∧´k≥0) ∧´ c = +´k × t
   sum ← +´k
   {𝕊: FindToBQN sum}•_while_{Sat req ∧ {@: 1; sum<𝕩}𝕩} @

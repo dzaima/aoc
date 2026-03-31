@@ -16,7 +16,7 @@ r ← Newrepl@
   t ← ((≠c)↑/⁼)¨b
   r ← ⟨"","",t‿c⟩ r.Exec "
     t‿c ← •args
-    k ← Int∘@¨ t
+    k ← $¨ (≠t)⥊int
     n ← (∧´k≥0) ∧´ c = +´k × t
     best ← @
     sum ← +´k

@@ -1,11 +1,11 @@
 #!/usr/bin/env bqn
-⟨Ints, Input⟩ ← •Import "../../utils/utils.bqn"
-p ← Ints 4⊑•FLines 2024‿17 Input 1↓•args
-⟨newrepl⟩ ← •Import ⊑•args # bqn-smt/bitwuzla.bqn (or cvc5.bqn or z3.bqn) - https://codeberg.org/dzaima/bqn-smt
+⟨SMT, Ints, Input⟩ ← •Import "../../utils/utils.bqn"
+p ← Ints 4⊑•FLines 2024‿17 Input •args
+⟨newrepl⟩ ← SMT "z3"‿"cvc5"
 
 r ← Newrepl @
 
-smt ← r.REPLExec "{
+solve ← r.REPLExec "{
   Run ← {p𝕊r:
     outs ← ⟨⟩
     jleft ← ≠p
@@ -36,7 +36,7 @@ smt ← r.REPLExec "{
   
   { 𝕊 p:
     _do ← { 𝔽_𝕣𝕩:
-      a ← I64@
+      a ← $i64
       req‿outs ← p Run ⟨a, 0i64, 0i64⟩
       Sat req ∧ (𝔽 a) ∧´ p = outs?
         FindToBQN a
@@ -48,4 +48,4 @@ smt ← r.REPLExec "{
   }
 }"
 
-•Show Smt p
+•Show Solve p

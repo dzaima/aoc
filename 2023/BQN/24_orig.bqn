@@ -1,5 +1,5 @@
 #!/usr/bin/env bqn
-⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, Tr, Input⟩ ← •Import "../../utils/utils.bqn"
+⟨RB, B10, Num, Repr, LCM, GCD, Ints, SInts, Split, SplitF, ReIndex, MDSlash, MDSlashI, Unjoin, Count, _fx_, _fi_, Tr, Input, SMT⟩ ← •Import "../../utils/utils.bqn"
 l ← {<˘2‿3⥊SInts 𝕩}¨ •FLines 2023‿24 Input •args
 # l ↩ {{•ParseFloat¨ ','Split𝕩}¨ '@'Split ' '⊸≠⊸/ 𝕩}¨ •FLines 2023‿24 Input •args
 x‿y‿z‿vx‿vy‿vz ← Tr ∾¨l
@@ -59,15 +59,15 @@ Cr ← { x1‿y1‿x2‿y2‿x3‿y3‿x4‿y4:
 # 28084 high
 
 
-⟨newrepl⟩ ← •Import"path/to/bqn-smt/bitwuzla.bqn" # https://codeberg.org/dzaima/bqn-smt
+⟨newrepl⟩ ← SMT "z3"‿"cvc5"‿"bitwuzla"
 r ← Newrepl @
 (r.REPLExec "l←@ ⋄ {l↩𝕩}") {𝕎𝕩} 4↑l
 
 r.REPLExec "
 
-r0 ← I64¨ ""xyz""
-rv ← I64¨ 'v'∾¨ ""xyz""
+r0 ← ""xyz"" $¨ i64
+rv ← ('v'∾¨""xyz"") $¨ i64
 
-Sat {⟨c0,cv⟩: t←I64@ ⋄ ∧´ (r0 + t×rv) = c0 + t×cv}¨ l
+Sat {⟨c0,cv⟩: t←$i64 ⋄ ∧´ (r0 + t×rv) = c0 + t×cv}¨ l
 •Show +´ EvalToBQN¨ Find¨ r0
 "
